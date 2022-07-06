@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {Container, IconButton, TextField} from '@mui/material';
 
 type AddItemFormPropsType = {
@@ -22,10 +22,15 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = ({calBack, todoID}) =
             setValue('')
         }
     }
+    const onEnterPressed = (event: KeyboardEvent<HTMLDivElement>) => {
+        event.key === 'Enter' && onClickHandler()
+    }
     return (
         <Container fixed>
             <div style={{paddingTop: '10px', display: 'flex', alignItems: 'center'}}>
-                <TextField variant='outlined'
+                <TextField
+                    onKeyDown={onEnterPressed}
+                    variant='outlined'
                            label={error ? 'Type something' : 'Add item'}
                            error={error}
                            onChange={onChangeHandler} value={value} size={'small'}></TextField>
