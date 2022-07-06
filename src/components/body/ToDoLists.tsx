@@ -73,11 +73,11 @@ export const ToDoLists: React.FC<ToDoListsPropsType> = ({
             </ul>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <ButtonGroup variant="text" aria-label="text button group">
-                    <Button size={'small'} variant={'outlined'} color={'warning'}
+                    <Button size={'small'} variant={filter === 'All' ? 'contained' : 'outlined'} color={'warning'}
                             onClick={() => onChangeFilter('All')}>All</Button>
-                    <Button size={'small'} variant={'outlined'} color={'error'}
+                    <Button size={'small'} variant={filter === 'Active' ? 'contained' : 'outlined'} color={'error'}
                             onClick={() => onChangeFilter('Active')}>Active</Button>
-                    <Button size={'small'} variant={'outlined'} color={'success'}
+                    <Button size={'small'} variant={filter === 'Completed' ? 'contained' : 'outlined'} color={'success'}
                             onClick={() => onChangeFilter('Completed')}>Completed</Button>
                 </ButtonGroup>
             </div>
