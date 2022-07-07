@@ -41,14 +41,13 @@ export const SpanInput: React.FC<SpanInputPropsType> = ({todoID, title, callBack
                         style={{textAlign: 'center',
                             width: '80%',
                             backgroundColor: '#6B7D93',
-                            borderRadius: '5px',
-                            overflowWrap: 'anywhere'
+                            borderRadius: '5px'
                         }}
                         onChange={onChangeHandler}
                         value={value}
                         onKeyDown={onEnterPressed}
                         onBlur={onSave}/>
-                    : <span onDoubleClick={onDoubleClick}>{title}</span>
+                    : <span style={{overflowWrap: 'anywhere'}} onDoubleClick={onDoubleClick}>{title}</span>
             }
         </div>
     );
