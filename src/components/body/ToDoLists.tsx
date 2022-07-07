@@ -1,6 +1,6 @@
-import React, {ChangeEvent, useState} from 'react';
+import React from 'react';
 import {FilterValueType, TaskType} from '../../App';
-import {Button, ButtonGroup, Checkbox, Container, Grid, IconButton} from '@mui/material';
+import {Button, ButtonGroup, Checkbox, IconButton} from '@mui/material';
 import {Delete} from '@mui/icons-material';
 import {AddItemForm} from '../AddItemForm/AddItemForm';
 import {SpanInput} from '../SpanInput/SpanInput';

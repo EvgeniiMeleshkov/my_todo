@@ -25,7 +25,6 @@ function App() {
 
     const todoID1 = v1()
     const todoID2 = v1()
-    let filter:FilterValueType
 
     const [toDo, setTodo] = useState<ToDoType[]>([
         {todoID: todoID1, title: 'What to learn', filter: 'All'},
