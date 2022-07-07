@@ -1,9 +1,9 @@
 import React, {ChangeEvent, useState} from 'react';
-import {v1} from 'uuid';
 import {FilterValueType, TaskType} from '../../App';
 import {Button, ButtonGroup, Checkbox, Container, Grid, IconButton} from '@mui/material';
 import {Delete} from '@mui/icons-material';
 import {AddItemForm} from '../AddItemForm/AddItemForm';
+import {SpanInput} from '../SpanInput/SpanInput';
 
 type ToDoListsPropsType = {
     todoID: string
@@ -15,6 +15,8 @@ type ToDoListsPropsType = {
     addTask: (todoID: string, title: string) => void
     filterTasks: (todoID: string, filter: FilterValueType) => void
     deleteTodo: (todoID: string) => void
+    changeTodoTitle: (todoID: string, title: string) => void
+    changeTaskTitle: (todoID: string, taskID: string, title: string) => void
 }
 export const ToDoLists: React.FC<ToDoListsPropsType> = ({
                                                             todoID,
@@ -25,7 +27,9 @@ export const ToDoLists: React.FC<ToDoListsPropsType> = ({
                                                             addTask,
                                                             filterTasks,
                                                             deleteTodo,
-                                                            filter
+                                                            filter,
+                                                            changeTodoTitle,
+                                                            changeTaskTitle
                                                         }) => {
 
     const onIsDoneHandler = (taskId: string, isDone: boolean) => {
@@ -48,10 +52,9 @@ export const ToDoLists: React.FC<ToDoListsPropsType> = ({
                         alignItems: 'center',
                         gridAutoFlow: 'column',
                         justifyContent: 'space-between',
-                        height: '30px',
                     }}>
                         <Checkbox onClick={() => onIsDoneHandler(t.id, t.isDone)} checked={t.isDone}/>
-                        {t.title}
+                        <SpanInput title={t.title} todoID={todoID} callBack={(todoID, title)=>changeTaskTitle(todoID, t.id, title)}/>
                         <IconButton onClick={() => onDeleteTaskHandler(t.id)} size={'small'}>
                         <Delete/>
                     </IconButton>
@@ -61,11 +64,21 @@ export const ToDoLists: React.FC<ToDoListsPropsType> = ({
     })
     return (
         <div style={{width: '220px', marginTop: '1rem'}}>
-            <div style={{textAlign: 'center', fontWeight: 'bolder', fontSize: 'large'}}>
-                {title}
-                <IconButton onClick={onDeleteTodoHandler} size={'large'}>
-                    <Delete/>
-                </IconButton>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                textAlign: 'center', fontWeight: 'bolder', fontSize: 'large'
+            }}>
+                <div>
+                    <SpanInput title={title} todoID={todoID} callBack={changeTodoTitle}/>
+                </div>
+                <div>
+                    <IconButton onClick={onDeleteTodoHandler} size={'large'}>
+                        <Delete/>
+                    </IconButton>
+                </div>
             </div>
             <AddItemForm todoID={todoID} calBack={addTask}/>
             <ul style={{padding: '0'}}>

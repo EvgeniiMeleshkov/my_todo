@@ -1,0 +1,44 @@
+import React, {useState, KeyboardEvent, ChangeEvent} from 'react';
+
+
+type SpanInputPropsType = {
+    title: string
+    todoID: string
+    callBack: (todoID: string, title: string)=>void
+}
+export const SpanInput: React.FC<SpanInputPropsType> = ({todoID, title, callBack}) => {
+
+    const [editMode, setEditMode] = useState(false)
+    const [value, setValue] = useState(title)
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const val = e.currentTarget.value
+        setValue(val)
+    }
+    const onDoubleClick = () => {
+        setEditMode(true)
+    }
+    const onSave = () => {
+        callBack(todoID, value)
+        setEditMode(false)
+    }
+    const onEnterPressed = (e: KeyboardEvent<HTMLInputElement>) => {
+        e.key === 'Enter' && onSave()
+    }
+
+    return (
+        <div>
+            {
+                editMode
+                    ? <input
+                        autoFocus
+                        style={{textAlign: 'center', backgroundColor: '#6B7D93', borderRadius: '5px'}}
+                        onChange={onChangeHandler}
+                        value={value}
+                        onKeyDown={onEnterPressed}
+                        onBlur={onSave}/>
+                    : <span onDoubleClick={onDoubleClick}>{title}</span>
+            }
+        </div>
+    );
+};

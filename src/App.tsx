@@ -86,7 +86,14 @@ function App() {
         delete tasks[todoID]
         console.log(tasks)
     }
-
+    const changeTodoTitle = (todoID: string, title: string) => {
+        setTodo(toDo.map(el => el.todoID === todoID ? {...el, title} : el))
+    }
+    const changeTaskTitle = (todoID: string, taskID: string, title: string) => {
+        setTasks({...tasks, [todoID]: tasks[todoID].map(el => {
+            return el.id === taskID ? {...el, title} : el
+            })})
+    }
     const todoForRender = toDo.map(t => {
         const tasksForRender = t.filter === 'Completed'
             ? tasks[t.todoID].filter(el => el.isDone === true)
@@ -105,6 +112,8 @@ function App() {
                         addTask={addTask}
                         filterTasks={filterTasks}
                         deleteTodo={deleteTodo}
+                        changeTodoTitle={changeTodoTitle}
+                        changeTaskTitle={changeTaskTitle}
                     />
                 </Paper>
             </Grid>

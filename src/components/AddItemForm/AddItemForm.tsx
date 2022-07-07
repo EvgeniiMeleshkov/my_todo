@@ -4,9 +4,10 @@ import {Container, IconButton, TextField} from '@mui/material';
 type AddItemFormPropsType = {
     calBack: (todoID: string, title: string) => void
     todoID: string
+    title?: string
 }
 
-export const AddItemForm: React.FC<AddItemFormPropsType> = ({calBack, todoID}) => {
+export const AddItemForm: React.FC<AddItemFormPropsType> = ({calBack, todoID, title}) => {
     const [error, setError] = useState(false)
     const [value, setValue] = useState('')
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +34,8 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = ({calBack, todoID}) =
                     variant='outlined'
                            label={error ? 'Type something' : 'Add item'}
                            error={error}
-                           onChange={onChangeHandler} value={value} size={'small'}></TextField>
+                           placeholder={title}
+                    onChange={onChangeHandler} value={value} size={'small'}></TextField>
                 <IconButton onClick={onClickHandler} size={'medium'} title={'Add task'}>
                     ➕
                 </IconButton>
