@@ -19,8 +19,14 @@ export const SpanInput: React.FC<SpanInputPropsType> = ({todoID, title, callBack
         setEditMode(true)
     }
     const onSave = () => {
-        callBack(todoID, value)
-        setEditMode(false)
+        if(value.match(/\w|\W/) ){
+            callBack(todoID, value)
+            setEditMode(false)
+        } else {
+            setValue(title)
+            setEditMode(false)
+        }
+
     }
     const onEnterPressed = (e: KeyboardEvent<HTMLInputElement>) => {
         e.key === 'Enter' && onSave()
@@ -32,7 +38,10 @@ export const SpanInput: React.FC<SpanInputPropsType> = ({todoID, title, callBack
                 editMode
                     ? <input
                         autoFocus
-                        style={{textAlign: 'center', backgroundColor: '#6B7D93', borderRadius: '5px'}}
+                        style={{textAlign: 'center',
+                            width: '80%',
+                            backgroundColor: '#6B7D93',
+                            borderRadius: '5px'}}
                         onChange={onChangeHandler}
                         value={value}
                         onKeyDown={onEnterPressed}
