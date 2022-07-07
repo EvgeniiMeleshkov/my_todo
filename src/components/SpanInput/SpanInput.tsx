@@ -41,7 +41,9 @@ export const SpanInput: React.FC<SpanInputPropsType> = ({todoID, title, callBack
                         style={{textAlign: 'center',
                             width: '80%',
                             backgroundColor: '#6B7D93',
-                            borderRadius: '5px'}}
+                            borderRadius: '5px',
+                            overflowWrap: 'anywhere'
+                        }}
                         onChange={onChangeHandler}
                         value={value}
                         onKeyDown={onEnterPressed}
