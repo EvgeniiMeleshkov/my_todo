@@ -39,7 +39,7 @@ export const SpanInput: React.FC<SpanInputPropsType> = ({todoID, title, callBack
                     ? <input
                         autoFocus
                         style={{textAlign: 'center',
-                            width: '80%',
+                            width: '75%',
                             backgroundColor: '#6B7D93',
                             borderRadius: '5px'
                         }}
