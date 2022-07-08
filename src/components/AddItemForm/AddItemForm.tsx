@@ -31,11 +31,12 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = ({calBack, todoID, ti
             <div style={{paddingTop: '10px', display: 'flex', alignItems: 'center'}}>
                 <TextField
                     onKeyDown={onEnterPressed}
-                    variant='outlined'
-                           label={error ? 'Type something' : 'Add item'}
-                           error={error}
-                           placeholder={title}
-                    onChange={onChangeHandler} value={value} size={'small'}></TextField>
+                    label={error ? 'Type something' : 'Add item'}
+                    error={error}
+                    placeholder={title}
+                    onChange={onChangeHandler}
+                    value={value}
+                    size={'small'}></TextField>
                 <IconButton onClick={onClickHandler} size={'medium'} title={'Add task'}>
                     ➕
                 </IconButton>

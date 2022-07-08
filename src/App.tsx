@@ -68,7 +68,7 @@ function App() {
         }
         setTasks({...tasks, [todoID]: [newTask, ...tasks[todoID]]})
     }
-    const filterTasks = (todoID: string, filter: FilterValueType) => {
+    const filteredTodo = (todoID: string, filter: FilterValueType) => {
         setTodo(toDo.map(el => el.todoID === todoID ? {...el, filter} : el))
     }
     const addTodo = (todoID: string, title: string) => {
@@ -109,7 +109,7 @@ function App() {
                         tasks={tasksForRender}
                         toggleIsDone={toggleIsDone}
                         addTask={addTask}
-                        filterTasks={filterTasks}
+                        filterTasks={filteredTodo}
                         deleteTodo={deleteTodo}
                         changeTodoTitle={changeTodoTitle}
                         changeTaskTitle={changeTaskTitle}
