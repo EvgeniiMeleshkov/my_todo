@@ -1,7 +1,7 @@
 import {ToDoListStateType} from '../App';
 import {v1} from 'uuid';
 
-export const tasksReducer = (state: ToDoListStateType, action: ActionsTaskTypes) => {
+export const TasksReducer = (state: ToDoListStateType, action: ActionsTaskTypes): ToDoListStateType => {
     switch (action.type) {
         case 'ADD_TASK':
             const newTask = {
@@ -24,6 +24,12 @@ export const tasksReducer = (state: ToDoListStateType, action: ActionsTaskTypes)
                     return el.id !== action.payload.taskId
                 })
             }
+        case 'ADD_EMPTY_TASKS_TO_NEW_TODO':
+            return {...state, [action.payload.todoID]: []}
+        case 'DELETE_TASKS_THEN_TODO_DELETED':
+            const copyState = {...state}
+            delete copyState[action.payload.todoID]
+            return copyState
         default:
             return state
     }
@@ -33,10 +39,12 @@ type addTaskACType = ReturnType<typeof addTaskAC>
 type deleteTaskACType = ReturnType<typeof deleteTaskAC>
 type toggleIsDoneACType = ReturnType<typeof toggleIsDoneAC>
 type changeTaskTitleACType = ReturnType<typeof changeTaskTitleAC>
+type addEmptyTasksToNewTodoACType = ReturnType<typeof addEmptyTasksToNewTodoAC>
+type deleteTasksThenTodoDeletedACType = ReturnType<typeof deleteTasksThenTodoDeletedAC>
 
-export type ActionsTaskTypes = addTaskACType | deleteTaskACType | toggleIsDoneACType | changeTaskTitleACType
+export type ActionsTaskTypes = deleteTasksThenTodoDeletedACType | addEmptyTasksToNewTodoACType | addTaskACType | deleteTaskACType | toggleIsDoneACType | changeTaskTitleACType
 
-const addTaskAC = (todoID: string, title: string) => {
+export const addTaskAC = (todoID: string, title: string) => {
     return {
         type: 'ADD_TASK',
         payload: {
@@ -45,8 +53,23 @@ const addTaskAC = (todoID: string, title: string) => {
         }
     } as const
 }
-
-const deleteTaskAC = (todoID: string, taskId: string) => {
+export const deleteTasksThenTodoDeletedAC = (todoID: string) => {
+    return {
+        type: 'DELETE_TASKS_THEN_TODO_DELETED',
+        payload: {
+            todoID: todoID
+        }
+    } as const
+}
+export const addEmptyTasksToNewTodoAC = (todoID: string) => {
+    return {
+        type: 'ADD_EMPTY_TASKS_TO_NEW_TODO',
+        payload: {
+            todoID: todoID
+        }
+    } as const
+}
+export const deleteTaskAC = (todoID: string, taskId: string) => {
     return {
         type: 'DELETE_TASK',
         payload: {
@@ -55,7 +78,7 @@ const deleteTaskAC = (todoID: string, taskId: string) => {
         }
     } as const
 }
-const toggleIsDoneAC = (todoID: string, taskId: string, isDone: boolean) => {
+export const toggleIsDoneAC = (todoID: string, taskId: string, isDone: boolean) => {
     return {
         type: 'TOGGLE_IS_DONE',
         payload: {
@@ -65,7 +88,7 @@ const toggleIsDoneAC = (todoID: string, taskId: string, isDone: boolean) => {
         }
     } as const
 }
-const changeTaskTitleAC = (todoID: string, taskID: string, title: string) => {
+export const changeTaskTitleAC = (todoID: string, taskID: string, title: string) => {
     return {
         type: 'CHANGE_TASK_TITLE',
         payload: {

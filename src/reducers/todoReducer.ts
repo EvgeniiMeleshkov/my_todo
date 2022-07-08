@@ -1,6 +1,6 @@
 import {FilterValueType, ToDoType} from '../App';
 
-export const TodoReducer = (state: ToDoType[], action: ActionsTodoTypes) => {
+export const TodoReducer = (state: ToDoType[], action: ActionsTodoTypes):ToDoType[] => {
     switch (action.type) {
         case 'ADD_TODO':
             const newTodo: ToDoType = {
@@ -26,7 +26,7 @@ type deleteTodoACType = ReturnType<typeof deleteTodoAC>
 
 type ActionsTodoTypes = deleteTodoACType| filteredTodoACType | addTodoACType | changeTodoTitleACType
 
-const filteredTodoAC = (todoID: string, filter: FilterValueType) => {
+export const filteredTodoAC = (todoID: string, filter: FilterValueType) => {
     return {
         type: 'FILTERED_TODO',
         payload: {
@@ -35,7 +35,7 @@ const filteredTodoAC = (todoID: string, filter: FilterValueType) => {
         }
     } as const
 }
-const addTodoAC = (todoID: string, title: string) => {
+export const addTodoAC = (todoID: string, title: string) => {
     return {
         type: 'ADD_TODO',
         payload: {
@@ -44,7 +44,7 @@ const addTodoAC = (todoID: string, title: string) => {
         }
     } as const
 }
-const changeTodoTitleAC = (todoID: string, title: string) => {
+export const changeTodoTitleAC = (todoID: string, title: string) => {
     return {
         type: 'CHANGE_TODO_TITLE',
         payload: {
@@ -53,7 +53,7 @@ const changeTodoTitleAC = (todoID: string, title: string) => {
         }
     } as const
 }
-const deleteTodoAC = (todoID: string) => {
+export const deleteTodoAC = (todoID: string) => {
     return {
         type: "DELETE_TODO",
         payload: {
