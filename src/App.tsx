@@ -3,7 +3,7 @@ import './App.css';
 import ButtonAppBar from './components/header/ButtonAppBar';
 import {ToDoLists} from './components/body/ToDoLists';
 import {v1} from 'uuid';
-import {Container, Grid, Paper} from '@mui/material';
+import {Container, createTheme, CssBaseline, Grid, Paper, ThemeProvider} from '@mui/material';
 import {addTodoAC, changeTodoTitleAC, deleteTodoAC, filteredTodoAC, TodoReducer} from './reducers/todoReducer';
 import {
     addEmptyTasksToNewTodoAC,
@@ -13,6 +13,8 @@ import {
     TasksReducer,
     toggleIsDoneAC
 } from './reducers/tasksReducer';
+import {green, grey, purple, teal, yellow} from '@mui/material/colors';
+import {dark} from '@mui/material/styles/createPalette';
 
 export type ToDoType = {
     todoID: string
@@ -54,21 +56,22 @@ function App() {
         ]
     })
 
+//-------------------------------------------------------------
 
     const toggleIsDone = (todoID: string, taskId: string, isDone: boolean) => {
-        dispatchTasks(toggleIsDoneAC(todoID,taskId,isDone))
+        dispatchTasks(toggleIsDoneAC(todoID, taskId, isDone))
     }
     const deleteTask = (todoID: string, taskId: string) => {
-        dispatchTasks(deleteTaskAC(todoID,taskId))
+        dispatchTasks(deleteTaskAC(todoID, taskId))
     }
     const addTask = (todoID: string, title: string) => {
-        dispatchTasks(addTaskAC(todoID,title))
+        dispatchTasks(addTaskAC(todoID, title))
     }
     const filteredTodo = (todoID: string, filter: FilterValueType) => {
         dispatchTodo(filteredTodoAC(todoID, filter))
     }
     const addTodo = (todoID: string, title: string) => {
-        dispatchTodo(addTodoAC(todoID,title));
+        dispatchTodo(addTodoAC(todoID, title));
         dispatchTasks(addEmptyTasksToNewTodoAC(todoID))
     }
     const deleteTodo = (todoID: string) => {
@@ -76,11 +79,13 @@ function App() {
         dispatchTasks(deleteTasksThenTodoDeletedAC(todoID))
     }
     const changeTodoTitle = (todoID: string, title: string) => {
-        dispatchTodo(changeTodoTitleAC(todoID,title))
+        dispatchTodo(changeTodoTitleAC(todoID, title))
     }
     const changeTaskTitle = (todoID: string, taskID: string, title: string) => {
-        dispatchTasks(changeTaskTitleAC(todoID,taskID,title))
+        dispatchTasks(changeTaskTitleAC(todoID, taskID, title))
     }
+//-----------------------------------------------------------
+
     const todoForRender = toDo.map(t => {
         const tasksForRender = t.filter === 'Completed'
             ? tasks[t.todoID].filter(el => el.isDone === true)
@@ -107,16 +112,37 @@ function App() {
         )
     })
 
-    return (
-        <div className='App'>
-            <ButtonAppBar addTodo={addTodo}/>
-            <Container fixed>
-                <Grid container spacing={1}>
-                    {todoForRender}
-                </Grid>
-            </Container>
+    // const themNight = createTheme({
+    //     palette: {
+    //         primary: {
+    //             // Purple and green play nicely together.
+    //             main: grey[500],
+    //             contrastText: purple[300]
+    //         },
+    //         secondary: {
+    //             // This is green.A700 as hex.
+    //             main: '#999999',
+    //         },
+    //     },
+    // });
+    const darkTheme = createTheme({
+        palette: {
+            mode: 'dark'
+        },
+    });
 
-        </div>
+    return (
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline/>
+            <div className="App">
+                <ButtonAppBar addTodo={addTodo}/>
+                <Container fixed>
+                    <Grid container spacing={1}>
+                        {todoForRender}
+                    </Grid>
+                </Container>
+            </div>
+        </ThemeProvider>
     );
 }
 
