@@ -126,21 +126,22 @@ function App() {
     //     },
     // });
 
-    const [apearense, setApearence] = useState(false)
+
+    const [apearence, setApearence] = useState(false)
     const toggle = () => {
-        setApearence(!apearense)
+        setApearence(!apearence)
     }
     const theme = createTheme({
         palette: {
-            primary: apearense ? green : yellow,
-            mode: apearense ? 'light' : 'dark'
+            primary: apearence ? green : yellow,
+            mode: apearence ? 'light' : 'dark'
         },
     });
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
             <div className="App">
-                <ButtonAppBar toggle={toggle} addTodo={addTodo}/>
+                <ButtonAppBar apearence={apearence} toggle={toggle} addTodo={addTodo}/>
                 <Container fixed>
                     <Grid container spacing={1}>
                         {todoForRender}
