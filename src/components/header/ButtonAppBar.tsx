@@ -11,9 +11,10 @@ import {v1} from 'uuid';
 
 type ButtonAppBarPropsType = {
     addTodo: (todoID: string, title: string)=>void
+    toggle: ()=>void
 }
 
-export default function ButtonAppBar({addTodo}: ButtonAppBarPropsType) {
+export default function ButtonAppBar({addTodo, toggle}: ButtonAppBarPropsType) {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar style={{backgroundColor: '#5f9ea054', position: 'static'}}>
@@ -30,7 +31,9 @@ export default function ButtonAppBar({addTodo}: ButtonAppBarPropsType) {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         <div style={{display: 'flex',
                             alignItems: 'baseline'}}>
-                            <p style={{width: '30vw'}}>{'Add todo?...'}</p>
+                            <p style={{width: '30vw'}}>
+                                <button onClick={toggle}>toggle</button>
+                                {'Add todo?...'}</p>
                             <AddItemForm todoID={v1()} calBack={addTodo}/>
                         </div>
                     </Typography>

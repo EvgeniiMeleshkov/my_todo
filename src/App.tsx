@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useReducer, useState} from 'react';
 import './App.css';
 import ButtonAppBar from './components/header/ButtonAppBar';
 import {ToDoLists} from './components/body/ToDoLists';
@@ -13,7 +13,7 @@ import {
     TasksReducer,
     toggleIsDoneAC
 } from './reducers/tasksReducer';
-import {green, grey, purple, teal, yellow} from '@mui/material/colors';
+import {blueGrey, green, grey, purple, teal, yellow} from '@mui/material/colors';
 import {dark} from '@mui/material/styles/createPalette';
 
 export type ToDoType = {
@@ -125,17 +125,22 @@ function App() {
     //         },
     //     },
     // });
-    const darkTheme = createTheme({
+
+    const [apearense, setApearence] = useState(false)
+    const toggle = () => {
+        setApearence(!apearense)
+    }
+    const theme = createTheme({
         palette: {
-            mode: 'dark'
+            primary: apearense ? green : yellow,
+            mode: apearense ? 'light' : 'dark'
         },
     });
-
     return (
-        <ThemeProvider theme={darkTheme}>
+        <ThemeProvider theme={theme}>
             <CssBaseline/>
             <div className="App">
-                <ButtonAppBar addTodo={addTodo}/>
+                <ButtonAppBar toggle={toggle} addTodo={addTodo}/>
                 <Container fixed>
                     <Grid container spacing={1}>
                         {todoForRender}
