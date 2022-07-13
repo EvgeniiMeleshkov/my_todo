@@ -18,7 +18,7 @@ type ToDoListsPropsType = {
     changeTodoTitle: (todoID: string, title: string) => void
     changeTaskTitle: (todoID: string, taskID: string, title: string) => void
 }
-export const ToDoLists: React.FC<ToDoListsPropsType> = ({
+const ToDoListsToMemo: React.FC<ToDoListsPropsType> = ({
                                                             todoID,
                                                             tasks,
                                                             title,
@@ -97,3 +97,5 @@ export const ToDoLists: React.FC<ToDoListsPropsType> = ({
         </div>
     )
 }
+
+export const ToDoLists = React.memo(ToDoListsToMemo)

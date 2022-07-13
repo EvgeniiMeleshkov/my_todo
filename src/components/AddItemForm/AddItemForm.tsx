@@ -7,7 +7,7 @@ type AddItemFormPropsType = {
     title?: string
 }
 
-export const AddItemForm: React.FC<AddItemFormPropsType> = ({calBack, todoID, title}) => {
+export const AddItemFormToMemo: React.FC<AddItemFormPropsType> = ({calBack, todoID, title}) => {
     const [error, setError] = useState(false)
     const [value, setValue] = useState('')
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,4 +45,4 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = ({calBack, todoID, ti
     );
 };
 
-
+export const AddItemForm = React.memo(AddItemFormToMemo)

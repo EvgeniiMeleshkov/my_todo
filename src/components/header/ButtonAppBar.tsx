@@ -15,7 +15,7 @@ type ButtonAppBarPropsType = {
     apearence: boolean
 }
 
-export default function ButtonAppBar({addTodo, toggle, apearence}: ButtonAppBarPropsType) {
+ function ButtonAppBarToMemo({addTodo, toggle, apearence}: ButtonAppBarPropsType) {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar style={{backgroundColor: '#5f9ea054', position: 'static'}}>
@@ -48,3 +48,4 @@ export default function ButtonAppBar({addTodo, toggle, apearence}: ButtonAppBarP
         </Box>
     );
 }
+export const ButtonAppBar = React.memo(ButtonAppBarToMemo)

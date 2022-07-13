@@ -1,6 +1,6 @@
 import React, {useReducer, useState} from 'react';
 import './App.css';
-import ButtonAppBar from './components/header/ButtonAppBar';
+import {ButtonAppBar} from './components/header/ButtonAppBar';
 import {ToDoLists} from './components/body/ToDoLists';
 import {v1} from 'uuid';
 import {Container, createTheme, CssBaseline, Grid, Paper, ThemeProvider} from '@mui/material';
@@ -13,8 +13,7 @@ import {
     TasksReducer,
     toggleIsDoneAC
 } from './reducers/tasksReducer';
-import {blueGrey, green, grey, purple, teal, yellow} from '@mui/material/colors';
-import {dark} from '@mui/material/styles/createPalette';
+import {green, yellow} from '@mui/material/colors';
 
 export type ToDoType = {
     todoID: string

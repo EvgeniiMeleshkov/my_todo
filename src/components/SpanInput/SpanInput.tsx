@@ -6,7 +6,7 @@ type SpanInputPropsType = {
     todoID: string
     callBack: (todoID: string, title: string)=>void
 }
-export const SpanInput: React.FC<SpanInputPropsType> = ({todoID, title, callBack}) => {
+const SpanInputToMemo: React.FC<SpanInputPropsType> = ({todoID, title, callBack}) => {
 
     const [editMode, setEditMode] = useState(false)
     const [value, setValue] = useState(title)
@@ -52,3 +52,5 @@ export const SpanInput: React.FC<SpanInputPropsType> = ({todoID, title, callBack
         </div>
     );
 };
+
+export const SpanInput = React.memo(SpanInputToMemo)
