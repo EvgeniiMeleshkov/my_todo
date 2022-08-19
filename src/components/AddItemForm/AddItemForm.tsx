@@ -1,13 +1,12 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {Container, IconButton, TextField} from '@mui/material';
 
 type AddItemFormPropsType = {
-    calBack: (todoID: string, title: string) => void
-    todoID: string
+    calBack: (title: string) => void
     title?: string
 }
 
-export const AddItemFormToMemo: React.FC<AddItemFormPropsType> = ({calBack, todoID, title}) => {
+export const AddItemForm = memo( ({calBack, title}: AddItemFormPropsType) => {
     const [error, setError] = useState(false)
     const [value, setValue] = useState('')
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +18,7 @@ export const AddItemFormToMemo: React.FC<AddItemFormPropsType> = ({calBack, todo
         if (value.trim() === '') {
             setError(true)
         } else {
-            calBack(todoID, value)
+            calBack(value)
             setValue('')
         }
     }
@@ -43,6 +42,5 @@ export const AddItemFormToMemo: React.FC<AddItemFormPropsType> = ({calBack, todo
             </div>
         </Container>
     );
-};
+})
 
-export const AddItemForm = React.memo(AddItemFormToMemo)

@@ -1,7 +1,22 @@
-import {ToDoListStateType} from '../App';
 import {v1} from 'uuid';
+import {addTodoACType} from './todoReducer';
 
-export const TasksReducer = (state: ToDoListStateType, action: ActionsTaskTypes): ToDoListStateType => {
+
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
+
+export type ToDoListStateType = {
+    [key: string]: TaskType[]
+}
+
+
+
+const initialStateTasks = {} as ToDoListStateType
+
+export const TasksReducer = (state: ToDoListStateType = initialStateTasks, action: ActionsTaskTypes): ToDoListStateType => {
     switch (action.type) {
         case 'ADD_TASK':
             const newTask = {
@@ -24,8 +39,8 @@ export const TasksReducer = (state: ToDoListStateType, action: ActionsTaskTypes)
                     return el.id !== action.payload.taskId
                 })
             }
-        case 'ADD_EMPTY_TASKS_TO_NEW_TODO':
-            return {...state, [action.payload.todoID]: []}
+        case 'ADD_TODO':
+            return {...state, [action.payload.id]: []}
         case 'DELETE_TASKS_THEN_TODO_DELETED':
             const copyState = {...state}
             delete copyState[action.payload.todoID]
@@ -39,10 +54,10 @@ type addTaskACType = ReturnType<typeof addTaskAC>
 type deleteTaskACType = ReturnType<typeof deleteTaskAC>
 type toggleIsDoneACType = ReturnType<typeof toggleIsDoneAC>
 type changeTaskTitleACType = ReturnType<typeof changeTaskTitleAC>
-type addEmptyTasksToNewTodoACType = ReturnType<typeof addEmptyTasksToNewTodoAC>
+
 type deleteTasksThenTodoDeletedACType = ReturnType<typeof deleteTasksThenTodoDeletedAC>
 
-export type ActionsTaskTypes = deleteTasksThenTodoDeletedACType | addEmptyTasksToNewTodoACType | addTaskACType | deleteTaskACType | toggleIsDoneACType | changeTaskTitleACType
+export type ActionsTaskTypes = deleteTasksThenTodoDeletedACType | addTodoACType | addTaskACType | deleteTaskACType | toggleIsDoneACType | changeTaskTitleACType
 
 export const addTaskAC = (todoID: string, title: string) => {
     return {
@@ -61,14 +76,14 @@ export const deleteTasksThenTodoDeletedAC = (todoID: string) => {
         }
     } as const
 }
-export const addEmptyTasksToNewTodoAC = (todoID: string) => {
-    return {
-        type: 'ADD_EMPTY_TASKS_TO_NEW_TODO',
-        payload: {
-            todoID: todoID
-        }
-    } as const
-}
+// export const addEmptyTasksToNewTodoAC = (todoID: string) => {
+//     return {
+//         type: 'ADD_EMPTY_TASKS_TO_NEW_TODO',
+//         payload: {
+//             todoID: todoID
+//         }
+//     } as const
+// }
 export const deleteTaskAC = (todoID: string, taskId: string) => {
     return {
         type: 'DELETE_TASK',

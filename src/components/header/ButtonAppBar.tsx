@@ -7,15 +7,15 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {AddItemForm} from '../AddItemForm/AddItemForm';
-import {v1} from 'uuid';
+import {memo} from 'react';
 
 type ButtonAppBarPropsType = {
-    addTodo: (todoID: string, title: string)=>void
+    addTodo: (title: string)=>void
     toggle: ()=>void
-    apearence: boolean
+    appearance: boolean
 }
 
- function ButtonAppBarToMemo({addTodo, toggle, apearence}: ButtonAppBarPropsType) {
+ function ButtonAppBarToMemo({addTodo, toggle, appearance}: ButtonAppBarPropsType) {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar style={{backgroundColor: '#5f9ea054', position: 'static'}}>
@@ -30,17 +30,7 @@ type ButtonAppBarPropsType = {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        <div style={{display: 'flex',
-                            alignItems: 'baseline'}}>
-                            <p style={{width: '30vw'}}>
-                                <button style={{
-                                    fontSize: '30px',
-                                    marginRight: '2rem',
-                                    border: 'none',
-                                    backgroundColor: 'transparent'}} onClick={toggle}>{apearence ? '🌙' : '☀️'}</button>
-                                {'Add todo?...'}</p>
-                            <AddItemForm todoID={v1()} calBack={addTodo}/>
-                        </div>
+
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
@@ -48,4 +38,4 @@ type ButtonAppBarPropsType = {
         </Box>
     );
 }
-export const ButtonAppBar = React.memo(ButtonAppBarToMemo)
+export const ButtonAppBar = memo(ButtonAppBarToMemo)
