@@ -8,8 +8,8 @@ import {addTaskAC,deleteTasksThenTodoDeletedAC,
     ToDoListStateType} from '../../reducers/tasksReducer';
 import { changeTodoTitleAC, deleteTodoAC, filteredTodoAC, ToDoType} from '../../reducers/todoReducer';
 import {Task} from './Task';
-import {Button, ButtonGroup, IconButton} from '@material-ui/core';
-import {Delete} from '@material-ui/icons';
+import {Delete} from '@mui/icons-material';
+import {Button, ButtonGroup, IconButton} from '@mui/material';
 
 type ToDoListsPropsType = ToDoType
 
@@ -76,11 +76,11 @@ export const ToDoList = memo(({todoID, filter, title}: ToDoListsPropsType) => {
             </ul>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <ButtonGroup variant="text" aria-label="text button group">
-                    <Button size={'small'} variant={filter === 'All' ? 'contained' : 'outlined'} color={'primary'}
+                    <Button size={'small'} variant={filter === 'All' ? 'contained' : 'outlined'} color={'warning'}
                             onClick={() => onChangeFilter('All')}>All</Button>
                     <Button size={'small'} variant={filter === 'Active' ? 'contained' : 'outlined'} color={'secondary'}
                             onClick={() => onChangeFilter('Active')}>Active</Button>
-                    <Button size={'small'} variant={filter === 'Completed' ? 'contained' : 'outlined'} color={'default'}
+                    <Button size={'small'} variant={filter === 'Completed' ? 'contained' : 'outlined'} color={'info'}
                             onClick={() => onChangeFilter('Completed')}>Completed</Button>
                 </ButtonGroup>
             </div>

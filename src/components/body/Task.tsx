@@ -1,9 +1,9 @@
 import React, {memo, useCallback} from 'react';
-import {Delete} from '@material-ui/icons';
 import {useDispatch} from 'react-redux';
 import {changeTaskTitleAC, deleteTaskAC, toggleIsDoneAC} from '../../reducers/tasksReducer';
 import {SpanInput} from '../SpanInput/SpanInput';
-import {Checkbox, IconButton} from '@material-ui/core';
+import {Delete} from '@mui/icons-material';
+import {Checkbox, IconButton} from '@mui/material';
 
 type TasksPropsType = {
     taskID: string
@@ -34,12 +34,12 @@ export const Task = memo(({taskTitle, taskIsDone, taskID, todoID}: TasksPropsTyp
                 gridAutoFlow: 'column',
                 justifyContent: 'space-between',
             }}>
-                <Checkbox color={'primary'} onChange={onIsDoneHandler} checked={taskIsDone}/>
+                <Checkbox color={'warning'} onChange={onIsDoneHandler} checked={taskIsDone}/>
 
                 <SpanInput title={taskTitle} todoID={todoID}
                            callBack={changeTaskTitle}/>
 
-                <IconButton color={'primary'} onClick={onDeleteTaskHandler} size={'small'}>
+                <IconButton color={'warning'} onClick={onDeleteTaskHandler} size={'small'}>
                     <Delete/>
                 </IconButton>
             </li>

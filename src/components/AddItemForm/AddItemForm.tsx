@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
-import {Container, IconButton, TextField} from '@mui/material';
+import {Container, IconButton, TextField} from '@material-ui/core';
+import {Add} from '@mui/icons-material';
 
 type AddItemFormPropsType = {
     calBack: (title: string) => void
@@ -37,7 +38,7 @@ export const AddItemForm = memo( ({calBack, title}: AddItemFormPropsType) => {
                     value={value}
                     size={'small'}></TextField>
                 <IconButton onClick={onClickHandler} size={'medium'} title={'Add task'}>
-                    ➕
+                    <Add/>
                 </IconButton>
             </div>
         </Container>

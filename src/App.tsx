@@ -1,12 +1,12 @@
 import React, {useCallback, useState} from 'react';
 import './App.css';
 import {ButtonAppBar} from './components/header/ButtonAppBar';
-import {Container, createTheme, CssBaseline, Grid, Paper, ThemeProvider, Typography} from '@material-ui/core';
 import {addTodoAC, ToDoType} from './reducers/todoReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStoreType} from './redux/store';
 import {ToDoList} from './components/body/ToDoList';
 import {AddItemForm} from './components/AddItemForm/AddItemForm';
+import {Container, createTheme, CssBaseline, Grid, Paper, ThemeProvider} from '@material-ui/core';
 import {green, yellow} from '@material-ui/core/colors';
 
 
@@ -53,10 +53,7 @@ function App() {
                                 backgroundColor: 'transparent'
                             }} onClick={toggle}>{appearance ? '🌙' : '☀️'}</button>
                             {'Add todo?...'}</p>
-                        <Typography >
                             <AddItemForm calBack={addTodo}/>
-                        </Typography>
-
                     </div>
                     <Grid container spacing={1}>
                         {
