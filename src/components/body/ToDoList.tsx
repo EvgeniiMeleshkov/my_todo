@@ -1,7 +1,5 @@
 import React, {memo, useCallback} from 'react';
 import {FilterValueType} from '../../App';
-import {Button, ButtonGroup, IconButton} from '@mui/material';
-import {Delete} from '@mui/icons-material';
 import {AddItemForm} from '../AddItemForm/AddItemForm';
 import {SpanInput} from '../SpanInput/SpanInput';
 import {useDispatch, useSelector} from 'react-redux';
@@ -10,6 +8,8 @@ import {addTaskAC,deleteTasksThenTodoDeletedAC,
     ToDoListStateType} from '../../reducers/tasksReducer';
 import { changeTodoTitleAC, deleteTodoAC, filteredTodoAC, ToDoType} from '../../reducers/todoReducer';
 import {Task} from './Task';
+import {Button, ButtonGroup, IconButton} from '@material-ui/core';
+import {Delete} from '@material-ui/icons';
 
 type ToDoListsPropsType = ToDoType
 
@@ -48,7 +48,7 @@ export const ToDoList = memo(({todoID, filter, title}: ToDoListsPropsType) => {
 
     const mappedTasks = tasksForRender.map(t => {
         return (
-            <Task taskID={t.id} taskIsDone={t.isDone} taskTitle={t.title} todoID={todoID}/>
+            <Task key={t.id+todoID} taskID={t.id} taskIsDone={t.isDone} taskTitle={t.title} todoID={todoID}/>
         )
     })
 //---------------------------------RENDER--------------------------------
@@ -65,7 +65,7 @@ export const ToDoList = memo(({todoID, filter, title}: ToDoListsPropsType) => {
                     <SpanInput title={title} todoID={todoID} callBack={changeTodoTitle}/>
                 </div>
                 <div>
-                    <IconButton onClick={onDeleteTodoHandler} size={'large'}>
+                    <IconButton onClick={onDeleteTodoHandler} size={'medium'}>
                         <Delete/>
                     </IconButton>
                 </div>
@@ -76,11 +76,11 @@ export const ToDoList = memo(({todoID, filter, title}: ToDoListsPropsType) => {
             </ul>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <ButtonGroup variant="text" aria-label="text button group">
-                    <Button size={'small'} variant={filter === 'All' ? 'contained' : 'outlined'} color={'warning'}
+                    <Button size={'small'} variant={filter === 'All' ? 'contained' : 'outlined'} color={'primary'}
                             onClick={() => onChangeFilter('All')}>All</Button>
-                    <Button size={'small'} variant={filter === 'Active' ? 'contained' : 'outlined'} color={'error'}
+                    <Button size={'small'} variant={filter === 'Active' ? 'contained' : 'outlined'} color={'secondary'}
                             onClick={() => onChangeFilter('Active')}>Active</Button>
-                    <Button size={'small'} variant={filter === 'Completed' ? 'contained' : 'outlined'} color={'success'}
+                    <Button size={'small'} variant={filter === 'Completed' ? 'contained' : 'outlined'} color={'default'}
                             onClick={() => onChangeFilter('Completed')}>Completed</Button>
                 </ButtonGroup>
             </div>

@@ -1,13 +1,13 @@
 import React, {useCallback, useState} from 'react';
 import './App.css';
 import {ButtonAppBar} from './components/header/ButtonAppBar';
-import {Container, createTheme, CssBaseline, Grid, Paper, ThemeProvider} from '@mui/material';
+import {Container, createTheme, CssBaseline, Grid, Paper, ThemeProvider, Typography} from '@material-ui/core';
 import {addTodoAC, ToDoType} from './reducers/todoReducer';
-import {green, yellow} from '@mui/material/colors';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStoreType} from './redux/store';
 import {ToDoList} from './components/body/ToDoList';
 import {AddItemForm} from './components/AddItemForm/AddItemForm';
+import {green, yellow} from '@material-ui/core/colors';
 
 
 export type FilterValueType = 'All' | 'Active' | 'Completed'
@@ -26,31 +26,37 @@ function App() {
 //-----------------------------------------------------------
 
     const [appearance, setAppearance] = useState(false)
-    const toggle = useCallback( () => {
+    const toggle = useCallback(() => {
         setAppearance(appearance => !appearance)
     }, [])
     const theme = createTheme({
         palette: {
             primary: appearance ? green : yellow,
-            mode: appearance ? 'light' : 'dark'
+            type: appearance ? 'light' : 'dark'
         },
     });
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
             <div className="App">
-                <ButtonAppBar appearance={appearance} toggle={toggle} addTodo={addTodo}/>
+                <ButtonAppBar/>
                 <Container fixed>
-                    <div style={{display: 'flex',
-                        alignItems: 'baseline'}}>
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'baseline'
+                    }}>
                         <p style={{width: '30vw'}}>
                             <button style={{
                                 fontSize: '30px',
                                 marginRight: '2rem',
                                 border: 'none',
-                                backgroundColor: 'transparent'}} onClick={toggle}>{appearance ? '🌙' : '☀️'}</button>
+                                backgroundColor: 'transparent'
+                            }} onClick={toggle}>{appearance ? '🌙' : '☀️'}</button>
                             {'Add todo?...'}</p>
-                        <AddItemForm calBack={addTodo}/>
+                        <Typography >
+                            <AddItemForm calBack={addTodo}/>
+                        </Typography>
+
                     </div>
                     <Grid container spacing={1}>
                         {

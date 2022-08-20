@@ -20,6 +20,7 @@ export const TasksReducer = (state: ToDoListStateType = initialStateTasks, actio
     switch (action.type) {
         case 'ADD_TASK':
             const newTask = {
+                //FIX=================//
             id: v1(),
             title: action.payload.title,
             isDone: false

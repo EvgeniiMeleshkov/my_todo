@@ -1,9 +1,9 @@
 import React, {memo, useCallback} from 'react';
-import {Checkbox, IconButton} from '@mui/material';
-import {Delete} from '@mui/icons-material';
+import {Delete} from '@material-ui/icons';
 import {useDispatch} from 'react-redux';
 import {changeTaskTitleAC, deleteTaskAC, toggleIsDoneAC} from '../../reducers/tasksReducer';
 import {SpanInput} from '../SpanInput/SpanInput';
+import {Checkbox, IconButton} from '@material-ui/core';
 
 type TasksPropsType = {
     taskID: string
@@ -15,33 +15,33 @@ type TasksPropsType = {
 export const Task = memo(({taskTitle, taskIsDone, taskID, todoID}: TasksPropsType) => {
     const dispatch = useDispatch()
 
-    const onIsDoneHandler = useCallback( (taskId: string, isDone: boolean) => {
-        dispatch(toggleIsDoneAC(todoID, taskId, !isDone))
-    }, [dispatch, todoID])
+    const onIsDoneHandler = useCallback(() => {
+        dispatch(toggleIsDoneAC(todoID, taskID, !taskIsDone))
+    }, [dispatch, todoID, taskIsDone, taskID])
 
-    const changeTaskTitle = useCallback( (taskID: string, title: string) => {
+    const changeTaskTitle = useCallback((taskID: string, title: string) => {
         dispatch(changeTaskTitleAC(todoID, taskID, title))
-    },[dispatch, todoID])
-
-    const onDeleteTaskHandler = useCallback( (taskId: string) => {
-        dispatch(deleteTaskAC(todoID, taskId))
     }, [dispatch, todoID])
+
+    const onDeleteTaskHandler = useCallback(() => {
+        dispatch(deleteTaskAC(todoID, taskID))
+    }, [dispatch, todoID, taskID])
 
     return (
-        <span key={taskID}>
-                    <li style={{
-                        display: 'grid',
-                        alignItems: 'center',
-                        gridAutoFlow: 'column',
-                        justifyContent: 'space-between',
-                    }}>
-                        <Checkbox onClick={() => onIsDoneHandler(taskID, taskIsDone)} checked={taskIsDone}/>
-                        <SpanInput title={taskTitle} todoID={todoID}
-                                   callBack={(todoID, title) => changeTaskTitle(taskID, title)}/>
-                        <IconButton onClick={() => onDeleteTaskHandler(taskID)} size={'small'}>
-                        <Delete/>
-                    </IconButton>
-                    </li>
-            </span>
+            <li style={{
+                display: 'grid',
+                alignItems: 'center',
+                gridAutoFlow: 'column',
+                justifyContent: 'space-between',
+            }}>
+                <Checkbox color={'primary'} onChange={onIsDoneHandler} checked={taskIsDone}/>
+
+                <SpanInput title={taskTitle} todoID={todoID}
+                           callBack={changeTaskTitle}/>
+
+                <IconButton color={'primary'} onClick={onDeleteTaskHandler} size={'small'}>
+                    <Delete/>
+                </IconButton>
+            </li>
     );
 })
