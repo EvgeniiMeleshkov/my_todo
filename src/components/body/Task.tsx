@@ -34,12 +34,12 @@ export const Task = memo(({taskTitle, taskIsDone, taskID, todoID}: TasksPropsTyp
                 gridAutoFlow: 'column',
                 justifyContent: 'space-between',
             }}>
-                <Checkbox color={'warning'} onChange={onIsDoneHandler} checked={taskIsDone}/>
+                <Checkbox color='primary' onChange={onIsDoneHandler} checked={taskIsDone}/>
 
                 <SpanInput title={taskTitle} todoID={todoID}
                            callBack={changeTaskTitle}/>
 
-                <IconButton color={'warning'} onClick={onDeleteTaskHandler} size={'small'}>
+                <IconButton color='primary' onClick={onDeleteTaskHandler} size={'small'}>
                     <Delete/>
                 </IconButton>
             </li>

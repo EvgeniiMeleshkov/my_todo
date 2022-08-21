@@ -30,10 +30,24 @@ function App() {
         setAppearance(appearance => !appearance)
     }, [])
     const theme = createTheme({
-        palette: {
-            primary: appearance ? green : yellow,
-            type: appearance ? 'light' : 'dark'
+        palette: appearance ? {
+            primary: {
+                main: green[500],
+            },
+            secondary: {
+                main: '#f4f136',
+            },
+            type: 'dark'
+        }
+        : {
+        primary: {
+            main: yellow[500],
         },
+        secondary: {
+            main: '#117f8c',
+        },
+                type: 'light'
+    }
     });
     return (
         <ThemeProvider theme={theme}>
