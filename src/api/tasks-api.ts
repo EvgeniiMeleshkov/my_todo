@@ -1,15 +1,4 @@
-import axios, {AxiosResponse} from 'axios';
 
-
-type TodolistType = {
-    id: string
-    addedDate: string
-    order: number
-    title: string
-}
-
-
-//
 // export type PostResponseType = {
 // 	data: {
 //         item: TodolistType;
@@ -18,6 +7,8 @@ type TodolistType = {
 // 	fieldsErrors: string[];
 // 	resultCode: number;
 // }
+import axios from 'axios';
+
 export enum TaskStatuses {
     New = 0,
     InPropgress = 1,
@@ -36,6 +27,7 @@ export enum TaskPriorities {
 export type TasksFromServerType = {
     items: TaskItemType[];
     totalCount: number;
+    error: null | string
 }
 export type TaskItemType = {
     id: string
@@ -50,12 +42,13 @@ export type TaskItemType = {
     deadline: string | null
 
 }
-// export type CommonResponseType<T = {}> = {
-//     messages: string[];
-//     fieldsErrors: string[];
-//     resultCode: number;
-//     data: T
-// }
+//
+export type CommonResponseTasksType<T = {}> = {
+    messages: string[];
+    fieldsErrors: string[];
+    resultCode: number;
+    data: T
+}
 
 export type TaskUpdateType = {
     title: string
@@ -90,7 +83,7 @@ const instance = axios.create({
 
 export const taskApi = {
     getTasks(todoID: string) {
-        return instance.get(`todo-lists/${todoID}/tasks`)
+        return instance.get<CommonResponseTasksType>(`todo-lists/${todoID}/tasks`)
     },
     createTask(todoID: string, title: string) {
         return instance.post(`todo-lists/${todoID}/tasks`, {title})
