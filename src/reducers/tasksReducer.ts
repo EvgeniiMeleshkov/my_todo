@@ -1,15 +1,16 @@
 import {v1} from 'uuid';
 import {addTodoACType} from './todoReducer';
+import {TaskItemType, TaskPriorities, TasksFromServerType, TaskStatuses} from '../api/tasks-api';
 
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+// export type TaskType = {
+//     id: string
+//     title: string
+//     isDone: boolean
+// }
 
 export type ToDoListStateType = {
-    [key: string]: TaskType[]
+    [key: string]: TaskItemType[]
 }
 
 
@@ -21,18 +22,25 @@ export const TasksReducer = (state: ToDoListStateType = initialStateTasks, actio
         case 'ADD_TASK':
             const newTask = {
                 //FIX=================//
-            id: v1(),
+            id: action.payload.id,
             title: action.payload.title,
-            isDone: false
+                todoListId: action.payload.todoListId,
+                order: action.payload.order,
+                status: action.payload.status,
+                priority: action.payload.priority,
+                addedDate: action.payload.addedDate,
+                description: action.payload.description,
+                startDate: action.payload.startDate,
+                deadline: action.payload.deadline
         }
-            return {...state, [action.payload.todoID]: [newTask, ...state[action.payload.todoID]]}
+            return {...state, [action.payload.todoListId]: [newTask, ...state[action.payload.todoListId]]}
         case 'CHANGE_TASK_TITLE':
             return {...state, [action.payload.todoID]: state[action.payload.todoID].map(el => {
                     return el.id === action.payload.taskID ? {...el, title: action.payload.title} : el
                 })}
         case 'TOGGLE_IS_DONE':
             return {...state, [action.payload.todoID]: state[action.payload.todoID].map(el => {
-                    return el.id === action.payload.taskId ? {...el, isDone: action.payload.isDone} : el
+                    return el.id === action.payload.taskId ? {...el, status: action.payload.status} : el
                 })}
         case 'DELETE_TASK':
             return {
@@ -64,8 +72,16 @@ export const addTaskAC = (todoID: string, title: string) => {
     return {
         type: 'ADD_TASK',
         payload: {
-            todoID: todoID,
-            title: title
+            title,
+            id: v1(),
+            todoListId: todoID,
+            order: 1,
+            status: TaskStatuses.New,
+            priority: TaskPriorities.Hi,
+            addedDate: Date.toString(),
+            description: '',
+            startDate: '',
+            deadline: ''
         }
     } as const
 }
@@ -73,7 +89,7 @@ export const deleteTasksThenTodoDeletedAC = (todoID: string) => {
     return {
         type: 'DELETE_TASKS_THEN_TODO_DELETED',
         payload: {
-            todoID: todoID
+            todoID
         }
     } as const
 }
@@ -89,18 +105,18 @@ export const deleteTaskAC = (todoID: string, taskId: string) => {
     return {
         type: 'DELETE_TASK',
         payload: {
-            todoID: todoID,
-            taskId: taskId
+            todoID,
+            taskId
         }
     } as const
 }
-export const toggleIsDoneAC = (todoID: string, taskId: string, isDone: boolean) => {
+export const toggleIsDoneAC = (todoID: string, taskId: string, status: TaskStatuses) => {
     return {
         type: 'TOGGLE_IS_DONE',
         payload: {
-            todoID: todoID,
-            taskId: taskId,
-            isDone: isDone
+            todoID,
+            taskId,
+            status
         }
     } as const
 }
@@ -108,9 +124,9 @@ export const changeTaskTitleAC = (todoID: string, taskID: string, title: string)
     return {
         type: 'CHANGE_TASK_TITLE',
         payload: {
-            todoID: todoID,
-            taskID: taskID,
-            title: title
+            todoID,
+            taskID,
+            title
         }
     } as const
 }

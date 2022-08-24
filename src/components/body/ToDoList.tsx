@@ -10,10 +10,11 @@ import { changeTodoTitleAC, deleteTodoAC, filteredTodoAC, ToDoType} from '../../
 import {Task} from './Task';
 import {Delete} from '@mui/icons-material';
 import {Button, ButtonGroup, IconButton} from '@mui/material';
+import {TaskStatuses} from '../../api/tasks-api';
 
 type ToDoListsPropsType = ToDoType
 
-export const ToDoList = memo(({todoID, filter, title}: ToDoListsPropsType) => {
+export const ToDoList = memo(({id, filter, title}: ToDoListsPropsType) => {
 
     const dispatch = useDispatch()
     const tasks = useSelector<AppStoreType, ToDoListStateType>(state => state.tasks)
@@ -21,17 +22,17 @@ export const ToDoList = memo(({todoID, filter, title}: ToDoListsPropsType) => {
 
 //-------------------FILTER---------------------------
     const tasksForRender = filter === 'Completed'
-        ? tasks[todoID].filter(el => el.isDone)
+        ? tasks[id].filter(el => el.status === TaskStatuses.Complited)
         : filter === 'Active'
-            ? tasks[todoID].filter(el => !el.isDone)
-            : tasks[todoID]
+            ? tasks[id].filter(el => el.status !== TaskStatuses.Complited)
+            : tasks[id]
 
 //----------------TODO_LOGIC-------------------------
 
     const onDeleteTodoHandler = useCallback(() => {
-        dispatch(deleteTodoAC(todoID))
-        dispatch(deleteTasksThenTodoDeletedAC(todoID))
-    }, [dispatch, todoID])
+        dispatch(deleteTodoAC(id))
+        dispatch(deleteTasksThenTodoDeletedAC(id))
+    }, [dispatch, id])
 
     const changeTodoTitle = useCallback((todoID: string, title: string) => {
         dispatch(changeTodoTitleAC(todoID, title))
@@ -39,16 +40,16 @@ export const ToDoList = memo(({todoID, filter, title}: ToDoListsPropsType) => {
 
 //-------------------TASKS_LOGIC-----------------------
     const addTask = useCallback( (title: string) => {
-        dispatch(addTaskAC(todoID, title))
-    },[dispatch, todoID])
+        dispatch(addTaskAC(id, title))
+    },[dispatch, id])
 
     const onChangeFilter = useCallback( (filter: FilterValueType) => {
-        dispatch(filteredTodoAC(todoID, filter))
-    }, [dispatch, todoID])
+        dispatch(filteredTodoAC(id, filter))
+    }, [dispatch, id])
 
     const mappedTasks = tasksForRender.map(t => {
         return (
-            <Task key={t.id+todoID} taskID={t.id} taskIsDone={t.isDone} taskTitle={t.title} todoID={todoID}/>
+            <Task key={t.id+id} taskID={t.id} status={t.status} taskTitle={t.title} todoID={id}/>
         )
     })
 //---------------------------------RENDER--------------------------------
@@ -62,7 +63,7 @@ export const ToDoList = memo(({todoID, filter, title}: ToDoListsPropsType) => {
                 textAlign: 'center', fontWeight: 'bolder', fontSize: 'large'
             }}>
                 <div>
-                    <SpanInput title={title} todoID={todoID} callBack={changeTodoTitle}/>
+                    <SpanInput title={title} todoID={id} callBack={changeTodoTitle}/>
                 </div>
                 <div>
                     <IconButton onClick={onDeleteTodoHandler} size={'medium'}>

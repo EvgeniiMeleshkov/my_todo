@@ -37,7 +37,7 @@ function App() {
             secondary: {
                 main: '#f4f136',
             },
-            type: 'dark'
+            type: 'light'
         }
         : {
         primary: {
@@ -46,7 +46,7 @@ function App() {
         secondary: {
             main: '#117f8c',
         },
-                type: 'light'
+                type: 'dark'
     }
     });
     return (
@@ -73,12 +73,14 @@ function App() {
                         {
                             todoLists.map((t) => {
                                 return (
-                                    <Grid key={t.todoID} item style={{margin: '10px'}}>
+                                    <Grid key={t.id} item style={{margin: '10px'}}>
                                         <Paper style={{backgroundColor: '#6495ed3b'}}>
                                             <ToDoList
                                                 filter={t.filter}
-                                                todoID={t.todoID}
+                                                id={t.id}
                                                 title={t.title}
+                                                addedDate={t.addedDate}
+                                                order={t.order}
                                             />
                                         </Paper>
                                     </Grid>

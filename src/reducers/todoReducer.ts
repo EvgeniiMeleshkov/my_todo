@@ -1,9 +1,8 @@
 import {FilterValueType} from '../App';
 import {v1} from 'uuid';
+import {TodolistType} from '../api/todo-api';
 
-export type ToDoType = {
-    todoID: string
-    title: string
+export type ToDoType = TodolistType & {
     filter: FilterValueType
 }
 
@@ -13,17 +12,19 @@ export const TodoReducer = (state: ToDoType[] = initialTodo, action: ActionsTodo
     switch (action.type) {
         case 'ADD_TODO':
             const newTodo: ToDoType = {
-                todoID: action.payload.id,
+                id: action.payload.id,
                 title: action.payload.title,
-                filter: 'All'
+                filter: 'All',
+                addedDate: Date.toString(),
+                order: 1
             }
             return [newTodo ,...state]
         case 'DELETE_TODO':
-            return state.filter(el => el.todoID !== action.payload.todoID)
+            return state.filter(el => el.id !== action.payload.todoID)
         case 'FILTERED_TODO':
-            return state.map(el => el.todoID === action.payload.todoID ? {...el, filter: action.payload.filter} : el)
+            return state.map(el => el.id === action.payload.todoID ? {...el, filter: action.payload.filter} : el)
         case 'CHANGE_TODO_TITLE':
-            return state.map(el => el.todoID === action.payload.todoID ? {...el, title: action.payload.title} : el)
+            return state.map(el => el.id === action.payload.todoID ? {...el, title: action.payload.title} : el)
         default:
             return state
     }
