@@ -8,6 +8,8 @@ import {Container, createTheme, CssBaseline, Grid, Paper, ThemeProvider} from '@
 import {green, yellow} from '@material-ui/core/colors';
 import {AppRootStateType} from './redux/store';
 import {createTodoTC, getTodosTC, TodolistDomainType} from './reducers/todoReducer';
+import {todolistsAPI} from './api/todolists-api';
+import {log} from 'util';
 
 
 
@@ -51,6 +53,8 @@ function App() {
     });
 
     useEffect(()=>{
+        todolistsAPI.me()
+            .then(res => console.log(res));
         //@ts-ignore
         dispatch(getTodosTC)
     },[])
