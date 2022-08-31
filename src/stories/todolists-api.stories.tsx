@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {todoApi} from '../api/todo-api';
+import {ResponseType, todolistsAPI} from '../api/todolists-api';
 
 export default {
     title: 'TODO_API'
@@ -9,7 +9,7 @@ export default {
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todoApi.getTodos()
+        todolistsAPI.getTodolists()
             .then(res => setState(res.data))
 
     }, [])
@@ -19,7 +19,7 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todoApi.createTodo('Some todo')
+        todolistsAPI.createTodolist('Some todo')
             .then(res => setState(res.data))
     }, [])
 
@@ -29,7 +29,7 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todoApi.deleteTodo("00ef19ec-acc4-47c2-bf48-8ae70ff53c5d")
+        todolistsAPI.deleteTodolist("00ef19ec-acc4-47c2-bf48-8ae70ff53c5d")
             .then(res => setState(res.data))
     }, [])
 
@@ -38,7 +38,7 @@ export const DeleteTodolist = () => {
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todoApi.updateTodo({id: "3d8d1d11-a1ff-4cd1-9d18-b0ef4a5b2e22",title: 'BlahBlah'})
+        todolistsAPI.updateTodolist("3d8d1d11-a1ff-4cd1-9d18-b0ef4a5b2e22", 'BlahBlah')
             .then(res => setState(res.data))
     }, [])
 

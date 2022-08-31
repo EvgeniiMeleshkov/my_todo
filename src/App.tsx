@@ -1,25 +1,25 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './App.css';
 import {ButtonAppBar} from './components/header/ButtonAppBar';
-import {addTodoAC, ToDoType} from './reducers/todoReducer';
 import {useDispatch, useSelector} from 'react-redux';
-import {AppStoreType} from './redux/store';
 import {ToDoList} from './components/body/ToDoList';
 import {AddItemForm} from './components/AddItemForm/AddItemForm';
 import {Container, createTheme, CssBaseline, Grid, Paper, ThemeProvider} from '@material-ui/core';
 import {green, yellow} from '@material-ui/core/colors';
+import {AppRootStateType} from './redux/store';
+import {createTodoTC, getTodosTC, TodolistDomainType} from './reducers/todoReducer';
 
 
-export type FilterValueType = 'All' | 'Active' | 'Completed'
 
 function App() {
 
-    const todoLists = useSelector<AppStoreType, ToDoType[]>(state => state.todo)
+    const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
     const dispatch = useDispatch()
 //-------------------------------------------------------------
 
     const addTodo = useCallback((title: string) => {
-        dispatch(addTodoAC(title))
+        //@ts-ignore
+        dispatch(createTodoTC(title))
     }, [dispatch])
 
 
@@ -49,6 +49,12 @@ function App() {
                 type: 'dark'
     }
     });
+
+    useEffect(()=>{
+        //@ts-ignore
+        dispatch(getTodosTC)
+    },[])
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>

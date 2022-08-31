@@ -1,50 +1,60 @@
-import React, {memo, useCallback} from 'react';
-import {FilterValueType} from '../../App';
+import React, {memo, useCallback, useEffect} from 'react';
 import {AddItemForm} from '../AddItemForm/AddItemForm';
 import {SpanInput} from '../SpanInput/SpanInput';
 import {useDispatch, useSelector} from 'react-redux';
-import {AppStoreType} from '../../redux/store';
-import {addTaskAC,deleteTasksThenTodoDeletedAC,
-    ToDoListStateType} from '../../reducers/tasksReducer';
-import { changeTodoTitleAC, deleteTodoAC, filteredTodoAC, ToDoType} from '../../reducers/todoReducer';
+import {
+    addTaskTC, setTasksTC, TasksStateType
+} from '../../reducers/tasksReducer';
 import {Task} from './Task';
 import {Delete} from '@mui/icons-material';
 import {Button, ButtonGroup, IconButton} from '@mui/material';
-import {TaskStatuses} from '../../api/tasks-api';
+import {
+    changeTodolistFilterAC, changeTodolistTitleAC, deleteTodoTC,
+    FilterValuesType,
+    removeTodolistAC,
+    TodolistDomainType, updateTodoTitleTC
+} from '../../reducers/todoReducer';
+import {AppRootStateType} from '../../redux/store';
+import {TaskStatuses} from '../../api/todolists-api';
 
-type ToDoListsPropsType = ToDoType
+type ToDoListsPropsType = TodolistDomainType
 
 export const ToDoList = memo(({id, filter, title}: ToDoListsPropsType) => {
 
     const dispatch = useDispatch()
-    const tasks = useSelector<AppStoreType, ToDoListStateType>(state => state.tasks)
-
+    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    useEffect(()=>{
+        //@ts-ignore
+        dispatch(setTasksTC(id))
+    },[])
 
 //-------------------FILTER---------------------------
-    const tasksForRender = filter === 'Completed'
-        ? tasks[id].filter(el => el.status === TaskStatuses.Complited)
-        : filter === 'Active'
-            ? tasks[id].filter(el => el.status !== TaskStatuses.Complited)
+    const tasksForRender = filter === 'completed'
+        ? tasks[id].filter(el => el.status === TaskStatuses.Completed)
+        : filter === 'active'
+            ? tasks[id].filter(el => el.status !== TaskStatuses.Completed)
             : tasks[id]
 
 //----------------TODO_LOGIC-------------------------
 
     const onDeleteTodoHandler = useCallback(() => {
-        dispatch(deleteTodoAC(id))
-        dispatch(deleteTasksThenTodoDeletedAC(id))
+        //@ts-ignore
+        dispatch(deleteTodoTC(id))
     }, [dispatch, id])
 
     const changeTodoTitle = useCallback((todoID: string, title: string) => {
-        dispatch(changeTodoTitleAC(todoID, title))
+        //@ts-ignore
+        dispatch(updateTodoTitleTC(todoID, title))
     } ,[dispatch])
 
 //-------------------TASKS_LOGIC-----------------------
-    const addTask = useCallback( (title: string) => {
-        dispatch(addTaskAC(id, title))
-    },[dispatch, id])
+    const addTask = useCallback(function (title: string) {
+        //@ts-ignore
+        dispatch(addTaskTC(id, title));
+    }, [id, dispatch]);
 
-    const onChangeFilter = useCallback( (filter: FilterValueType) => {
-        dispatch(filteredTodoAC(id, filter))
+    const onChangeFilter = useCallback( (filter: FilterValuesType) => {
+        dispatch(changeTodolistFilterAC(id, filter))
     }, [dispatch, id])
 
     const mappedTasks = tasksForRender.map(t => {
@@ -77,12 +87,12 @@ export const ToDoList = memo(({id, filter, title}: ToDoListsPropsType) => {
             </ul>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <ButtonGroup variant="text" aria-label="text button group">
-                    <Button size={'small'} variant={filter === 'All' ? 'contained' : 'outlined'} color={'warning'}
-                            onClick={() => onChangeFilter('All')}>All</Button>
-                    <Button size={'small'} variant={filter === 'Active' ? 'contained' : 'outlined'} color={'secondary'}
-                            onClick={() => onChangeFilter('Active')}>Active</Button>
-                    <Button size={'small'} variant={filter === 'Completed' ? 'contained' : 'outlined'} color={'info'}
-                            onClick={() => onChangeFilter('Completed')}>Completed</Button>
+                    <Button size={'small'} variant={filter === 'all' ? 'contained' : 'outlined'} color={'warning'}
+                            onClick={() => onChangeFilter('all')}>All</Button>
+                    <Button size={'small'} variant={filter === 'active' ? 'contained' : 'outlined'} color={'secondary'}
+                            onClick={() => onChangeFilter('active')}>Active</Button>
+                    <Button size={'small'} variant={filter === 'completed' ? 'contained' : 'outlined'} color={'info'}
+                            onClick={() => onChangeFilter('completed')}>Completed</Button>
                 </ButtonGroup>
             </div>
         </div>
