@@ -1,7 +1,7 @@
 import React, {memo, useCallback, useEffect} from 'react';
 import {AddItemForm} from '../AddItemForm/AddItemForm';
 import {SpanInput} from '../SpanInput/SpanInput';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {
     addTaskTC, setTasksTC, TasksStateType
 } from '../../reducers/tasksReducer';
@@ -9,22 +9,20 @@ import {Task} from './Task';
 import {Delete} from '@mui/icons-material';
 import {Button, ButtonGroup, IconButton} from '@mui/material';
 import {
-    changeTodolistFilterAC, changeTodolistTitleAC, deleteTodoTC,
+    changeTodolistFilterAC, deleteTodoTC,
     FilterValuesType,
-    removeTodolistAC,
     TodolistDomainType, updateTodoTitleTC
 } from '../../reducers/todoReducer';
-import {AppRootStateType} from '../../redux/store';
+import {AppRootStateType, useTypedDispatch} from '../../redux/store';
 import {TaskStatuses} from '../../api/todolists-api';
 
 type ToDoListsPropsType = TodolistDomainType
 
 export const ToDoList = memo(({id, filter, title}: ToDoListsPropsType) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useTypedDispatch()
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     useEffect(()=>{
-        //@ts-ignore
         dispatch(setTasksTC(id))
     },[])
 
@@ -38,18 +36,15 @@ export const ToDoList = memo(({id, filter, title}: ToDoListsPropsType) => {
 //----------------TODO_LOGIC-------------------------
 
     const onDeleteTodoHandler = useCallback(() => {
-        //@ts-ignore
         dispatch(deleteTodoTC(id))
     }, [dispatch, id])
 
     const changeTodoTitle = useCallback((todoID: string, title: string) => {
-        //@ts-ignore
         dispatch(updateTodoTitleTC(todoID, title))
     } ,[dispatch])
 
 //-------------------TASKS_LOGIC-----------------------
     const addTask = useCallback(function (title: string) {
-        //@ts-ignore
         dispatch(addTaskTC(id, title));
     }, [id, dispatch]);
 

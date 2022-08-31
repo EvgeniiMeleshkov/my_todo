@@ -6,21 +6,20 @@ import {ToDoList} from './components/body/ToDoList';
 import {AddItemForm} from './components/AddItemForm/AddItemForm';
 import {Container, createTheme, CssBaseline, Grid, Paper, ThemeProvider} from '@material-ui/core';
 import {green, yellow} from '@material-ui/core/colors';
-import {AppRootStateType} from './redux/store';
+import {AppRootStateType, useTypedDispatch} from './redux/store';
 import {createTodoTC, getTodosTC, TodolistDomainType} from './reducers/todoReducer';
 import {todolistsAPI} from './api/todolists-api';
-import {log} from 'util';
 
 
 
 function App() {
 
     const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
-    const dispatch = useDispatch()
+    const dispatch = useTypedDispatch()
 //-------------------------------------------------------------
 
     const addTodo = useCallback((title: string) => {
-        //@ts-ignore
+
         dispatch(createTodoTC(title))
     }, [dispatch])
 
@@ -54,10 +53,7 @@ function App() {
 
     useEffect(()=>{
         todolistsAPI.login().then(res => res)
-
-        todolistsAPI.me()
-            .then(res => console.log(res));
-        //@ts-ignore
+        todolistsAPI.me().then(res => console.log(res))
         dispatch(getTodosTC)
     },[])
 

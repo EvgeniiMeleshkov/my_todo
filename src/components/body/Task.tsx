@@ -1,10 +1,10 @@
 import React, {memo, useCallback} from 'react';
-import {useDispatch} from 'react-redux';
-import {changeTaskTitleAC, deleteTaskTC, updateTaskTC} from '../../reducers/tasksReducer';
+import {deleteTaskTC, updateTaskTC} from '../../reducers/tasksReducer';
 import {SpanInput} from '../SpanInput/SpanInput';
 import {Delete} from '@mui/icons-material';
 import {IconButton, MenuItem, Select, SelectChangeEvent} from '@mui/material';
 import {TaskStatuses} from '../../api/todolists-api';
+import {useTypedDispatch} from '../../redux/store';
 
 type TasksPropsType = {
     taskID: string
@@ -14,20 +14,17 @@ type TasksPropsType = {
 }
 
 export const Task = memo(({taskTitle, status, taskID, todoID}: TasksPropsType) => {
-    const dispatch = useDispatch()
+    const dispatch = useTypedDispatch()
 
     const onIsDoneHandler = useCallback((e: SelectChangeEvent<TaskStatuses>) => {
-        //@ts-ignore
-        dispatch(updateTaskTC(todoID, taskID, {status: e.target.value}))
+        dispatch(updateTaskTC(todoID, taskID, {status: e.target.value as TaskStatuses}))
     }, [dispatch, todoID, taskID])
 
     const changeTaskTitle = useCallback((id: string, title: string) => {
-        //@ts-ignore
         dispatch(updateTaskTC(id, taskID, {title}))
     }, [dispatch, taskID])
 
     const onDeleteTaskHandler = useCallback(() => {
-        //@ts-ignore
         dispatch(deleteTaskTC(taskID, todoID))
     }, [dispatch, todoID, taskID])
 
