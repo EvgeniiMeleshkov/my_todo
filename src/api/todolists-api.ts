@@ -11,6 +11,9 @@ const instance = axios.create({
 
 // api
 export const todolistsAPI = {
+    login() {
+        return instance.post(`auth/login`, {email: 'emeleshkov@mail.ru', password: 'JMJ-9851903747', rememberMe: true, captcha: false})
+    },
     me() {
         return instance.get(`auth/me`)
     },

@@ -53,6 +53,8 @@ function App() {
     });
 
     useEffect(()=>{
+        todolistsAPI.login().then(res => res)
+
         todolistsAPI.me()
             .then(res => console.log(res));
         //@ts-ignore
