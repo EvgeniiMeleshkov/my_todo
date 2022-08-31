@@ -4,9 +4,8 @@ import {TodolistDomainType} from '../reducers/todoReducer';
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
+
     headers: {
-        'ASP.NET_SessionId': '1wq4hin3m015xoqex14vbgci',
-        'ASPXAUTH': 'F13D80677CEF1C0D125B7C187B13F42FC7B5CF65EA8B810D828C6BA6484A1368BA2284082697AB2EE95D11200B22DB8C8E49EF6F7E162DF1E77ACEA08345ED5935F594222FA436CC1F1357C628941787F52F12FC',
         'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
     }
 })
