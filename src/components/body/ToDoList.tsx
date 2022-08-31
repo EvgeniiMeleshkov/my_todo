@@ -67,8 +67,8 @@ export const ToDoList = memo(({id, filter, title}: ToDoListsPropsType) => {
                 justifyContent: 'flex-end',
                 textAlign: 'center', fontWeight: 'bolder', fontSize: 'large'
             }}>
-                <div>
-                    <SpanInput title={title} todoID={id} callBack={changeTodoTitle}/>
+                <div style={{fontFamily: 'monospace'}}>
+                    <SpanInput fontSize={'20px'} title={title} todoID={id} callBack={changeTodoTitle}/>
                 </div>
                 <div>
                     <IconButton onClick={onDeleteTodoHandler} size={'medium'}>

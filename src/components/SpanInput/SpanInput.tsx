@@ -5,8 +5,9 @@ type SpanInputPropsType = {
     title: string
     todoID: string
     callBack: (todoID: string, title: string)=>void
+    fontSize: string
 }
-const SpanInputToMemo: React.FC<SpanInputPropsType> = ({todoID, title, callBack}) => {
+const SpanInputToMemo: React.FC<SpanInputPropsType> = ({todoID, title, callBack, fontSize}) => {
 
     const [editMode, setEditMode] = useState(false)
     const [value, setValue] = useState(title)
@@ -48,7 +49,7 @@ const SpanInputToMemo: React.FC<SpanInputPropsType> = ({todoID, title, callBack}
                         onKeyDown={onEnterPressed}
                         onBlur={onSave}/>
                     : <span style={{overflowWrap: 'anywhere',
-                        fontSize: 'medium',
+                        fontSize: fontSize,
                         fontWeight: 'bold',
                         color: 'inherit',
                         textShadow: '2px 1px 2px rgba(69,131,153,0.64)'}} onDoubleClick={onDoubleClick}>{title}</span>

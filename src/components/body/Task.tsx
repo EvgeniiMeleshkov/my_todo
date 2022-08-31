@@ -30,31 +30,31 @@ export const Task = memo(({taskTitle, status, taskID, todoID}: TasksPropsType) =
 
 
     return (
-            <li style={{
-                display: 'grid',
-                alignItems: 'center',
-                gridAutoFlow: 'column',
-                justifyContent: 'space-between',
-            }}>
-                <Select variant={'standard'} style={{color: 'inherit', fontSize: 'small'}}
+        <li style={{
+            display: 'grid',
+            alignItems: 'center',
+            gridAutoFlow: 'column',
+            justifyContent: 'space-between',
+        }}>
+            <Select variant={'standard'} style={{color: 'inherit', fontSize: 'small'}}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={status}
                     label="Task status"
                     onChange={onIsDoneHandler}
-                >
-                    <MenuItem value={TaskStatuses.New}>New</MenuItem>
-                    <MenuItem value={TaskStatuses.Completed}>Completed</MenuItem>
-                    <MenuItem value={TaskStatuses.Draft}>Draft</MenuItem>
-                    <MenuItem value={TaskStatuses.InProgress}>In propgress</MenuItem>
-                </Select>
-
-                <SpanInput title={taskTitle} todoID={todoID}
+            >
+                <MenuItem value={TaskStatuses.New}>New</MenuItem>
+                <MenuItem value={TaskStatuses.Completed}>Completed</MenuItem>
+                <MenuItem value={TaskStatuses.Draft}>Draft</MenuItem>
+                <MenuItem value={TaskStatuses.InProgress}>In propgress</MenuItem>
+            </Select>
+            <div style={{fontFamily: '-moz-initial'}}>
+                <SpanInput fontSize={'medium'} title={taskTitle} todoID={todoID}
                            callBack={changeTaskTitle}/>
-
-                <IconButton color={'primary'} style={{color: 'inherit'}} onClick={onDeleteTaskHandler} size={'small'}>
-                    <Delete/>
-                </IconButton>
-            </li>
+            </div>
+            <IconButton color={'primary'} style={{color: 'inherit'}} onClick={onDeleteTaskHandler} size={'small'}>
+                <Delete/>
+            </IconButton>
+        </li>
     );
 })
