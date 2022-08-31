@@ -47,7 +47,11 @@ const SpanInputToMemo: React.FC<SpanInputPropsType> = ({todoID, title, callBack}
                         value={value}
                         onKeyDown={onEnterPressed}
                         onBlur={onSave}/>
-                    : <span style={{overflowWrap: 'anywhere'}} onDoubleClick={onDoubleClick}>{title}</span>
+                    : <span style={{overflowWrap: 'anywhere',
+                        fontSize: 'medium',
+                        fontWeight: 'bold',
+                        color: 'inherit',
+                        textShadow: '2px 1px 2px rgba(69,131,153,0.64)'}} onDoubleClick={onDoubleClick}>{title}</span>
             }
         </div>
     );
