@@ -38,7 +38,7 @@ export const Task = memo(({taskTitle, status, taskID, todoID, entityTaskStatus}:
             gridAutoFlow: 'column',
             justifyContent: 'space-between',
         }}>
-            <Select variant={'standard'} style={{color: 'inherit', fontSize: 'small'}}
+            <Select variant={'standard'} style={{color: 'inherit', fontSize: 'small', paddingLeft: '5px'}}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={status}
