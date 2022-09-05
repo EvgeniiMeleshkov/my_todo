@@ -4,11 +4,13 @@ import {ButtonAppBar} from './components/header/ButtonAppBar';
 import {useDispatch, useSelector} from 'react-redux';
 import {ToDoList} from './components/body/ToDoList';
 import {AddItemForm} from './components/AddItemForm/AddItemForm';
-import {Container, createTheme, CssBaseline, Grid, Paper, ThemeProvider} from '@material-ui/core';
+import {Container, createTheme, CssBaseline, Grid, LinearProgress, Paper, ThemeProvider} from '@material-ui/core';
 import {green, yellow} from '@material-ui/core/colors';
 import {AppRootStateType, useTypedDispatch} from './redux/store';
 import {createTodoTC, getTodosTC, TodolistDomainType} from './reducers/todoReducer';
 import {todolistsAPI} from './api/todolists-api';
+import {ErrorSnackbar} from './components/errorSnackbar/ErrorSnackbar';
+import {StatusType} from './reducers/appReducer';
 
 
 
@@ -25,7 +27,7 @@ function App() {
 
 
 //-----------------------------------------------------------
-
+    const status = useSelector<AppRootStateType, StatusType>(state => state.app.status)
     const [appearance, setAppearance] = useState(false)
     const toggle = useCallback(() => {
         setAppearance(appearance => !appearance)
@@ -62,6 +64,9 @@ function App() {
             <CssBaseline/>
             <div className="App">
                 <ButtonAppBar/>
+                {status === 'loading' && <LinearProgress color={'primary'}/>}
+                {status === 'failed' && <LinearProgress style={{backgroundColor: 'crimson'}}/>}
+                <ErrorSnackbar />
                 <Container fixed>
                     <div style={{
                         display: 'flex',
@@ -75,8 +80,9 @@ function App() {
                                 backgroundColor: 'transparent'
                             }} onClick={toggle}>{appearance ? '🌙' : '☀️'}</button>
                             {'Add todo?...'}</p>
-                            <AddItemForm calBack={addTodo}/>
+                            <AddItemForm  calBack={addTodo}/>
                     </div>
+
                     <Grid container spacing={1}>
                         {
                             todoLists.map((t) => {
@@ -84,6 +90,7 @@ function App() {
                                     <Grid key={t.id} item style={{margin: '10px'}}>
                                         <Paper style={{backgroundColor: '#6495ed3b'}}>
                                             <ToDoList
+                                                entityStatus={t.entityStatus}
                                                 filter={t.filter}
                                                 id={t.id}
                                                 title={t.title}

@@ -74,6 +74,7 @@
 
 import {todolistsAPI, TodolistType} from '../api/todolists-api'
 import {Dispatch} from 'redux';
+import {setErrorAC, setStatusAC, StatusType} from './appReducer';
 
 export type RemoveTodolistActionType = {
     type: 'REMOVE-TODOLIST',
@@ -93,10 +94,10 @@ export type ChangeTodolistFilterActionType = {
     id: string
     filter: FilterValuesType
 }
-
+export type SetEntityStatusACType = ReturnType<typeof setTodoStatusAC>
 export type TodosActionsType = RemoveTodolistActionType | AddTodolistActionType
     | ChangeTodolistTitleActionType
-    | ChangeTodolistFilterActionType | ReturnType<typeof setTodolistAC>
+    | ChangeTodolistFilterActionType | ReturnType<typeof setTodolistAC> | SetEntityStatusACType
 
 const initialState: Array<TodolistDomainType> = [
     /*{id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
@@ -106,6 +107,7 @@ const initialState: Array<TodolistDomainType> = [
 export type FilterValuesType = 'all' | 'active' | 'completed';
 export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
+    entityStatus: StatusType
 }
 
 export const todolistsReducer = (state: Array<TodolistDomainType> = initialState, action: TodosActionsType): Array<TodolistDomainType> => {
@@ -133,7 +135,9 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
             return [...state]
         }
         case 'SET_TODOLISTS':
-            return action.todolists.map(el => ({...el, filter: 'all'}))
+            return action.todolists.map(el => ({...el, filter: 'all', entityStatus: 'idle'}))
+        case 'SET_TODO_STATUS':
+            return state.map(el => el.id === action.todoID ? {...el, entityStatus: action.status} : el)
         default:
             return state;
     }
@@ -157,27 +161,62 @@ export const setTodolistAC = (todolists: TodolistType[]) => {
         todolists
     } as const
 }
+export const setTodoStatusAC = (todoID: string, status: StatusType) => {
+    return {
+        type: 'SET_TODO_STATUS',
+        todoID,
+        status
+    } as const
+}
 
 
 //=============================== THUNK ===================
 
 export const getTodosTC = (dispatch: Dispatch) => {
+    dispatch(setStatusAC('loading'))
     todolistsAPI.getTodolists()
-        .then(res => dispatch(setTodolistAC(res.data)))
+        .then(res => {
+            dispatch(setTodolistAC(res.data))
+            dispatch(setStatusAC('succeeded'))
+        })
 }
 
 export const createTodoTC = (title: string) => (dispatch: Dispatch<any>) => {
+    dispatch(setStatusAC('loading'))
     todolistsAPI.createTodolist(title)
-        .then(res => dispatch(addTodolistAC(res.data.data.item)))
+        .then(res => {
+            if(res.data.resultCode === 0) {
+                dispatch(addTodolistAC(res.data.data.item))
+                dispatch(setStatusAC('succeeded'))
+            } else {
+                if (res.data.messages.length) {
+                    dispatch(setErrorAC(res.data.messages[0]))
+                    dispatch(setStatusAC('failed'))
+                } else {
+                    dispatch(setErrorAC('Something went wrong'))
+                    dispatch(setStatusAC('failed'))
+                }
+            }
+        })
 }
 
 export const deleteTodoTC = (todoID: string) => (dispatch: Dispatch) => {
+    dispatch(setStatusAC('loading'))
+    dispatch(setTodoStatusAC(todoID, 'loading'))
     todolistsAPI.deleteTodolist(todoID)
-        .then(res => dispatch(removeTodolistAC(todoID)))
+        .then(res => {
+            dispatch(removeTodolistAC(todoID))
+            dispatch(setStatusAC('succeeded'))
+            dispatch(setTodoStatusAC(todoID, 'succeeded'))
+        })
 }
 
 export const updateTodoTitleTC = (todoID: string, title: string) => (dispatch: Dispatch) => {
+    dispatch(setStatusAC('loading'))
     todolistsAPI.updateTodolist(todoID, title)
-        .then(res => dispatch(changeTodolistTitleAC(todoID, title)))
+        .then(res => {
+            dispatch(changeTodolistTitleAC(todoID, title))
+            dispatch(setStatusAC('succeeded'))
+        })
 }
 

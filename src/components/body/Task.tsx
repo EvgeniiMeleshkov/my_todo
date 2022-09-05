@@ -5,15 +5,17 @@ import {Delete} from '@mui/icons-material';
 import {IconButton, MenuItem, Select, SelectChangeEvent} from '@mui/material';
 import {TaskStatuses} from '../../api/todolists-api';
 import {useTypedDispatch} from '../../redux/store';
+import {StatusType} from '../../reducers/appReducer';
 
 type TasksPropsType = {
     taskID: string
     status: TaskStatuses
     taskTitle: string
     todoID: string
+    entityTaskStatus: StatusType
 }
 
-export const Task = memo(({taskTitle, status, taskID, todoID}: TasksPropsType) => {
+export const Task = memo(({taskTitle, status, taskID, todoID, entityTaskStatus}: TasksPropsType) => {
     const dispatch = useTypedDispatch()
 
     const onIsDoneHandler = useCallback((e: SelectChangeEvent<TaskStatuses>) => {
@@ -52,7 +54,7 @@ export const Task = memo(({taskTitle, status, taskID, todoID}: TasksPropsType) =
                 <SpanInput fontSize={'medium'} title={taskTitle} todoID={todoID}
                            callBack={changeTaskTitle}/>
             </div>
-            <IconButton color={'primary'} style={{color: 'inherit'}} onClick={onDeleteTaskHandler} size={'small'}>
+            <IconButton disabled={entityTaskStatus === 'loading' || entityTaskStatus === 'failed'} color={'primary'} style={{color: 'inherit'}} onClick={onDeleteTaskHandler} size={'small'}>
                 <Delete/>
             </IconButton>
         </li>

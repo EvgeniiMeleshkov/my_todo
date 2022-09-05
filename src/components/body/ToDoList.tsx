@@ -15,16 +15,16 @@ import {
 } from '../../reducers/todoReducer';
 import {AppRootStateType, useTypedDispatch} from '../../redux/store';
 import {TaskStatuses} from '../../api/todolists-api';
+import {StatusType} from '../../reducers/appReducer';
 
 type ToDoListsPropsType = TodolistDomainType
 
-export const ToDoList = memo(({id, filter, title}: ToDoListsPropsType) => {
-
+export const ToDoList = memo(({id, filter, title, entityStatus, order, addedDate}: ToDoListsPropsType) => {
     const dispatch = useTypedDispatch()
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     useEffect(()=>{
         dispatch(setTasksTC(id))
-    },[])
+    },[dispatch, id])
 
 //-------------------FILTER---------------------------
     const tasksForRender = filter === 'completed'
@@ -54,7 +54,7 @@ export const ToDoList = memo(({id, filter, title}: ToDoListsPropsType) => {
 
     const mappedTasks = tasksForRender.map(t => {
         return (
-            <Task key={t.id+id} taskID={t.id} status={t.status} taskTitle={t.title} todoID={id}/>
+            <Task key={t.id+id} entityTaskStatus={t.entityStatus} taskID={t.id} status={t.status} taskTitle={t.title} todoID={id}/>
         )
     })
 //---------------------------------RENDER--------------------------------
@@ -71,12 +71,12 @@ export const ToDoList = memo(({id, filter, title}: ToDoListsPropsType) => {
                     <SpanInput fontSize={'20px'} title={title} todoID={id} callBack={changeTodoTitle}/>
                 </div>
                 <div>
-                    <IconButton onClick={onDeleteTodoHandler} size={'medium'}>
+                    <IconButton disabled={entityStatus === 'loading' || entityStatus === 'failed'} onClick={onDeleteTodoHandler} size={'medium'}>
                         <Delete/>
                     </IconButton>
                 </div>
             </div>
-            <AddItemForm calBack={addTask}/>
+            <AddItemForm disabled={entityStatus === 'loading' || entityStatus === 'failed'} calBack={addTask}/>
             <ul style={{padding: '0'}}>
                 {mappedTasks}
             </ul>

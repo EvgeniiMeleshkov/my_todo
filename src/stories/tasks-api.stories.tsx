@@ -9,7 +9,7 @@ export default {
 export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistsAPI.getTasks("3d8d1d11-a1ff-4cd1-9d18-b0ef4a5b2e22")
+        todolistsAPI.getTasks("71b1efff-4284-4839-b2ae-77b94b543281")
             .then(res => setState(res.data))
 
     }, [])
@@ -19,7 +19,7 @@ export const GetTasks = () => {
 export const CreateTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistsAPI.createTask("3d8d1d11-a1ff-4cd1-9d18-b0ef4a5b2e22", 'Task Task Task Task')
+        todolistsAPI.createTask("71b1efff-4284-4839-b2ae-77b94b543281", 'Task Task Task Task')
             .then(res => setState(res.data))
     }, [])
 
@@ -29,7 +29,7 @@ export const CreateTask = () => {
 export const DeleteTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistsAPI.deleteTask('3d8d1d11-a1ff-4cd1-9d18-b0ef4a5b2e22', "522bb91f-b4d9-4998-b0d5-9144a48ea8c5")
+        todolistsAPI.deleteTask('71b1efff-4284-4839-b2ae-77b94b543281', "574d5db3-4b9d-4805-9476-33003d6f697f")
             .then(res => setState(res.data))
     }, [])
 
@@ -39,7 +39,7 @@ export const UpdateTaskTitle = () => {
 
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistsAPI.updateTask('3d8d1d11-a1ff-4cd1-9d18-b0ef4a5b2e22', "2e4d16a3-b51b-4d49-9dab-60acb2e41bf1",
+        todolistsAPI.updateTask('71b1efff-4284-4839-b2ae-77b94b543281', "2e4d16a3-b51b-4d49-9dab-60acb2e41bf1",
             {title: 'adafd'}
         )
             .then(res => setState(res.data))

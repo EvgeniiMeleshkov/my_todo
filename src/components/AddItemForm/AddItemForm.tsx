@@ -5,9 +5,10 @@ import {Container, IconButton, TextField} from '@material-ui/core';
 type AddItemFormPropsType = {
     calBack: (title: string) => void
     title?: string
+    disabled?: boolean
 }
 
-export const AddItemForm = memo( ({calBack, title}: AddItemFormPropsType) => {
+export const AddItemForm = memo( ({calBack, title, disabled}: AddItemFormPropsType) => {
     const [error, setError] = useState(false)
     const [value, setValue] = useState('')
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +38,7 @@ export const AddItemForm = memo( ({calBack, title}: AddItemFormPropsType) => {
                     onChange={onChangeHandler}
                     value={value}
                     size={'small'}></TextField>
-                <IconButton onClick={onClickHandler} size={'medium'} title={'Add task'}>
+                <IconButton disabled={disabled} onClick={onClickHandler} size={'medium'} title={'Add task'}>
                     <Add/>
                 </IconButton>
             </div>
