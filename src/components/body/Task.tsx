@@ -17,7 +17,7 @@ type TasksPropsType = {
 
 export const Task = memo(({taskTitle, status, taskID, todoID, entityTaskStatus}: TasksPropsType) => {
     const dispatch = useTypedDispatch()
-
+    const isDisabled = entityTaskStatus === 'loading' || entityTaskStatus === 'failed'
     const onIsDoneHandler = useCallback((e: SelectChangeEvent<TaskStatuses>) => {
         dispatch(updateTaskTC(todoID, taskID, {status: e.target.value as TaskStatuses}))
     }, [dispatch, todoID, taskID])
@@ -38,7 +38,7 @@ export const Task = memo(({taskTitle, status, taskID, todoID, entityTaskStatus}:
             gridAutoFlow: 'column',
             justifyContent: 'space-between',
         }}>
-            <Select variant={'standard'} style={{color: 'inherit', fontSize: 'small', paddingLeft: '5px'}}
+            <Select disabled={isDisabled} variant={'standard'} style={{color: 'inherit', fontSize: 'small', paddingLeft: '5px'}}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={status}
@@ -54,7 +54,7 @@ export const Task = memo(({taskTitle, status, taskID, todoID, entityTaskStatus}:
                 <SpanInput fontSize={'medium'} title={taskTitle} todoID={todoID}
                            callBack={changeTaskTitle}/>
             </div>
-            <IconButton disabled={entityTaskStatus === 'loading' || entityTaskStatus === 'failed'} color={'primary'} style={{color: 'inherit'}} onClick={onDeleteTaskHandler} size={'small'}>
+            <IconButton disabled={isDisabled} color={'primary'} style={{color: 'inherit'}} onClick={onDeleteTaskHandler} size={'small'}>
                 <Delete/>
             </IconButton>
         </li>

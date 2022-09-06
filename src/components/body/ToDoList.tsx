@@ -15,11 +15,11 @@ import {
 } from '../../reducers/todoReducer';
 import {AppRootStateType, useTypedDispatch} from '../../redux/store';
 import {TaskStatuses} from '../../api/todolists-api';
-import {StatusType} from '../../reducers/appReducer';
 
 type ToDoListsPropsType = TodolistDomainType
 
 export const ToDoList = memo(({id, filter, title, entityStatus, order, addedDate}: ToDoListsPropsType) => {
+    const isDisabled = entityStatus === 'loading' || entityStatus === 'failed'
     const dispatch = useTypedDispatch()
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     useEffect(()=>{
@@ -71,12 +71,12 @@ export const ToDoList = memo(({id, filter, title, entityStatus, order, addedDate
                     <SpanInput fontSize={'20px'} title={title} todoID={id} callBack={changeTodoTitle}/>
                 </div>
                 <div>
-                    <IconButton disabled={entityStatus === 'loading' || entityStatus === 'failed'} onClick={onDeleteTodoHandler} size={'medium'}>
+                    <IconButton disabled={isDisabled} onClick={onDeleteTodoHandler} size={'medium'}>
                         <Delete/>
                     </IconButton>
                 </div>
             </div>
-            <AddItemForm disabled={entityStatus === 'loading' || entityStatus === 'failed'} calBack={addTask}/>
+            <AddItemForm disabled={isDisabled} calBack={addTask}/>
             <ul style={{padding: '0'}}>
                 {mappedTasks}
             </ul>
