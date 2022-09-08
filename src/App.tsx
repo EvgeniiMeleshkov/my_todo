@@ -21,6 +21,7 @@ import {initializeAppTC, RequestStatusType} from './reducers/appReducer';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Login} from './components/login/Login';
 import {logOutTC} from './reducers/authReducer';
+import {paths} from './paths/paths';
 
 
 function App() {
@@ -87,7 +88,7 @@ function App() {
                 <Container fixed>
                     <Grid container spacing={1}>
                         <Routes>
-                            <Route path="/my_todo" element={todoLists.map((t) => {
+                            <Route path={paths.main} element={todoLists.map((t) => {
                                 return (<Grid key={t.id} item style={{margin: '10px'}}>
                                     <Paper style={{backgroundColor: '#6495ed3b'}}>
                                         <ToDoList
@@ -99,8 +100,8 @@ function App() {
                                             order={t.order}
                                         /></Paper></Grid>)
                             })}/>
-                            <Route path="/my_todo/login" element={<Login/>}/>
-                            <Route path="/404" element={'404'}/>
+                            <Route path={paths.login} element={<Login/>}/>
+                            <Route path={paths['404']} element={'404'}/>
                             <Route path="*" element={<Navigate to={'/404'}/>}/>
                         </Routes>
 
