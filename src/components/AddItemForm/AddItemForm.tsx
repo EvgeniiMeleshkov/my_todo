@@ -29,7 +29,7 @@ export const AddItemForm = memo( ({calBack, title, disabled}: AddItemFormPropsTy
     }
     return (
         <Container fixed>
-            <div style={{paddingTop: '10px', display: 'flex', alignItems: 'center'}}>
+            <div style={{paddingTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                 <TextField disabled={disabled}
                     onKeyDown={onEnterPressed}
                     label={error ? 'Type something' : 'Add item'}

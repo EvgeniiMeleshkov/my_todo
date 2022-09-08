@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import {TodolistDomainType} from '../reducers/todoReducer';
-import {StatusType} from '../reducers/appReducer';
+import {RequestStatusType} from '../reducers/appReducer';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -12,13 +12,20 @@ const instance = axios.create({
 })
 
 // api
-export const todolistsAPI = {
-    login() {
-        return instance.post(`auth/login`, {email: 'emeleshkov@mail.ru', password: 'JMJ-9851903747', rememberMe: true, captcha: false})
+
+export const authAPI = {
+    login(data: LoginParamsType) {
+        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{userId: string}>>>(`/auth/login`, data)
+    },
+    logOut() {
+        return instance.delete<LoginParamsType, AxiosResponse<ResponseType<LoginParamsType>>>(`/auth/login`)
     },
     me() {
-        return instance.get(`auth/me`)
-    },
+        return instance.get<LoginParamsType, AxiosResponse<ResponseType<LoginParamsType>>>(`/auth/me`)
+    }
+}
+
+export const todolistsAPI = {
     getTodolists() {
         return instance.get<TodolistType[]>('todo-lists');
     },
@@ -52,7 +59,12 @@ export type TodolistType = {
     addedDate: string
     order: number
 }
-
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe?: boolean
+    captcha?: string
+}
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
@@ -87,7 +99,7 @@ export type TaskType = {
     todoListId: string
     order: number
     addedDate: string
-    entityStatus: StatusType
+    entityStatus: RequestStatusType
 }
 export type UpdateTaskModelType = {
     title?: string

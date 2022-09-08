@@ -15,16 +15,18 @@ import {
 } from '../../reducers/todoReducer';
 import {AppRootStateType, useTypedDispatch} from '../../redux/store';
 import {TaskStatuses} from '../../api/todolists-api';
+import {Navigate} from 'react-router-dom';
 
 type ToDoListsPropsType = TodolistDomainType
 
 export const ToDoList = memo(({id, filter, title, entityStatus, order, addedDate}: ToDoListsPropsType) => {
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const isDisabled = entityStatus === 'loading' || entityStatus === 'failed'
     const dispatch = useTypedDispatch()
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     useEffect(()=>{
         dispatch(setTasksTC(id))
-    },[dispatch, id])
+    },[])
 
 //-------------------FILTER---------------------------
     const tasksForRender = filter === 'completed'
@@ -57,6 +59,9 @@ export const ToDoList = memo(({id, filter, title, entityStatus, order, addedDate
             <Task key={t.id+id} entityTaskStatus={t.entityStatus} taskID={t.id} status={t.status} taskTitle={t.title} todoID={id}/>
         )
     })
+
+
+    if(!isLoggedIn) {return <Navigate to={'/my_todo/login'}/>}
 //---------------------------------RENDER--------------------------------
     return (
         <div style={{width: '220px', marginTop: '1rem'}}>

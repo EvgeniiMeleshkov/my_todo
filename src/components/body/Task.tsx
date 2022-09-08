@@ -5,14 +5,14 @@ import {Delete} from '@mui/icons-material';
 import {IconButton, MenuItem, Select, SelectChangeEvent} from '@mui/material';
 import {TaskStatuses} from '../../api/todolists-api';
 import {useTypedDispatch} from '../../redux/store';
-import {StatusType} from '../../reducers/appReducer';
+import {RequestStatusType} from '../../reducers/appReducer';
 
 type TasksPropsType = {
     taskID: string
     status: TaskStatuses
     taskTitle: string
     todoID: string
-    entityTaskStatus: StatusType
+    entityTaskStatus: RequestStatusType
 }
 
 export const Task = memo(({taskTitle, status, taskID, todoID, entityTaskStatus}: TasksPropsType) => {
