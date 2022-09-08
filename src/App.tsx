@@ -18,7 +18,7 @@ import {AppRootStateType, useTypedDispatch} from './redux/store';
 import {createTodoTC, getTodosTC, TodolistDomainType} from './reducers/todoReducer';
 import {ErrorSnackbar} from './components/errorSnackbar/ErrorSnackbar';
 import {initializeAppTC, RequestStatusType} from './reducers/appReducer';
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Navigate, NavLink, Route, Routes} from 'react-router-dom';
 import {Login} from './components/login/Login';
 import {logOutTC} from './reducers/authReducer';
 import {paths} from './paths/paths';
@@ -71,7 +71,7 @@ function App() {
                     <Toolbar>
                         {isLoggedIn
                             ? <Button onClick={logOut} color="inherit">Log out</Button>
-                            : <Button color="inherit">Login</Button>}
+                            : <NavLink style={{textDecoration: 'none', color: 'inherit'}} to={paths.login}><Button color="inherit">Login</Button></NavLink>}
                         {isLoggedIn && <AddItemForm calBack={addTodo}/>}
                         <button style={{
                             fontSize: '30px',
