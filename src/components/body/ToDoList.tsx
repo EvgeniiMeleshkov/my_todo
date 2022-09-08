@@ -62,9 +62,8 @@ export const ToDoList = memo(({id, filter, title, entityStatus, order, addedDate
     })
 
 
-    if(!isLoggedIn) {return <Navigate to={paths.login}/>}
-//---------------------------------RENDER--------------------------------
-    return (
+    return !isLoggedIn ? <Navigate to={paths.login}/>
+   : (
         <div style={{width: '220px', marginTop: '1rem'}}>
             <div style={{
                 display: 'flex',

@@ -28,21 +28,10 @@ function App() {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
     const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
-    const dispatch = useTypedDispatch()
-//-------------------------------------------------------------
-
-    const logOut = () => {
-        dispatch(logOutTC())
-    }
-
-    const addTodo = useCallback((title: string) => {
-        dispatch(createTodoTC(title))
-    }, [dispatch])
-
-
-//-----------------------------------------------------------
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const [appearance, setAppearance] = useState(false)
+    const dispatch = useTypedDispatch()
+//-------------------------------------------------------------
     const toggle = useCallback(() => {
         setAppearance(appearance => !appearance)
     }, [])
@@ -56,13 +45,23 @@ function App() {
         dispatch(getTodosTC)
     }, [])
 
+    const logOut = () => {
+        dispatch(logOutTC())
+    }
+
+    const addTodo = useCallback((title: string) => {
+        dispatch(createTodoTC(title))
+    }, [dispatch])
+
+
+//-----------------------------------------------------------
 
     if (!isInitialized) {
         return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
     }
-
+//-------------------------------------------------------------
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
