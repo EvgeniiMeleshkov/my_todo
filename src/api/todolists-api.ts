@@ -1,12 +1,13 @@
 import axios, { AxiosResponse } from 'axios'
 import {TodolistDomainType} from '../reducers/todoReducer';
 import {RequestStatusType} from '../reducers/appReducer';
-
+// axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded'
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
-
     headers: {
+        // 'Access-Control-Allow-Origin': '*',
+        // 'Content-Type': 'application/json',
         'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
     }
 })

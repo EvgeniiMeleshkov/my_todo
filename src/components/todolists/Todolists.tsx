@@ -20,13 +20,13 @@ const Todolists = () => {
             return
         }
         dispatch(getTodosTC)
-    },[isLoggedIn])
+    },[])
 
     if(!isLoggedIn) {return <Navigate to={paths.login}/>}
 
     return (
             <Grid container spacing={1}>
-               {todoLists.map((t) => {
+               {todoLists.length && todoLists.map((t) => {
                         return (<Grid key={t.id} item style={{margin: '10px'}}>
                             <Paper style={{backgroundColor: '#6495ed3b'}}>
                                 <ToDoList

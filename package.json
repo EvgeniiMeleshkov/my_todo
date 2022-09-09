@@ -1,6 +1,5 @@
 {
   "homepage": "https://evgeniimeleshkov.github.io/my_todo/",
-
   "version": "0.1.0",
   "private": true,
   "dependencies": {

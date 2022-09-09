@@ -38,6 +38,7 @@ export const setAppInitAC = (value: boolean) => ({type: 'APP/SET-INIT', value} a
 
 
 export const initializeAppTC = () => async (dispatch: Dispatch) => {
+    console.log("thunk")
     try {
         const res = await authAPI.me()
         if (res.data.resultCode === 0) {

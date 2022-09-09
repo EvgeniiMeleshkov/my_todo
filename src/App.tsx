@@ -41,8 +41,11 @@ function App() {
     });
 
     useEffect(() => {
-
+        console.log("Initilazie")
         dispatch(initializeAppTC())
+        return () => {
+            console.log("Unmount!")
+        }
     }, [])
 
     const logOut = () => {
