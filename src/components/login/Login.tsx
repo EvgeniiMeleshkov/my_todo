@@ -12,7 +12,6 @@ import { useSelector} from 'react-redux';
 import {Navigate} from 'react-router-dom';
 import { AppRootStateType, useTypedDispatch} from '../../redux/store';
 import {loginTC} from '../../reducers/authReducer';
-import {paths} from '../../paths/paths';
 
 type FormikErrorsType = {
     email?: string
@@ -54,7 +53,7 @@ export const Login = () => {
         },
     });
 
-    if(isLoggedIn) {return <Navigate to={paths.main}/>}
+    if(isLoggedIn) {return <Navigate to={'/'}/>}
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>

@@ -15,8 +15,6 @@ import {
 } from '../../reducers/todoReducer';
 import {AppRootStateType, useTypedDispatch} from '../../redux/store';
 import {TaskStatuses} from '../../api/todolists-api';
-import {Navigate} from 'react-router-dom';
-import {paths} from '../../paths/paths';
 
 type ToDoListsPropsType = TodolistDomainType
 
@@ -62,8 +60,7 @@ export const ToDoList = memo(({id, filter, title, entityStatus, order, addedDate
     })
 
 
-    return !isLoggedIn ? <Navigate to={paths.login}/>
-   : (
+  return (
         <div style={{width: '220px', marginTop: '1rem'}}>
             <div style={{
                 display: 'flex',

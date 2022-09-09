@@ -15,19 +15,19 @@ import {
 } from '@material-ui/core';
 import {green, yellow} from '@material-ui/core/colors';
 import {AppRootStateType, useTypedDispatch} from './redux/store';
-import {createTodoTC, getTodosTC, TodolistDomainType} from './reducers/todoReducer';
+import {createTodoTC} from './reducers/todoReducer';
 import {ErrorSnackbar} from './components/errorSnackbar/ErrorSnackbar';
 import {initializeAppTC, RequestStatusType} from './reducers/appReducer';
 import {Navigate, NavLink, Route, Routes} from 'react-router-dom';
-import {Login} from './components/login/Login';
 import {logOutTC} from './reducers/authReducer';
 import {paths} from './paths/paths';
+import Todolists from './components/todolists/Todolists';
+import {Login} from './components/login/Login';
 
 
 function App() {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-    const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const [appearance, setAppearance] = useState(false)
     const dispatch = useTypedDispatch()
@@ -41,8 +41,8 @@ function App() {
     });
 
     useEffect(() => {
+
         dispatch(initializeAppTC())
-        dispatch(getTodosTC)
     }, [])
 
     const logOut = () => {
@@ -84,29 +84,16 @@ function App() {
                 {status === 'loading' && <LinearProgress color={'primary'}/>}
                 {status === 'failed' && <LinearProgress style={{backgroundColor: 'crimson'}}/>}
                 <ErrorSnackbar/>
-                <Container fixed>
-                    <Grid container spacing={1}>
-                        <Routes>
-                            <Route path={paths.main} element={todoLists.map((t) => {
-                                return (<Grid key={t.id} item style={{margin: '10px'}}>
-                                    <Paper style={{backgroundColor: '#6495ed3b'}}>
-                                        <ToDoList
-                                            entityStatus={t.entityStatus}
-                                            filter={t.filter}
-                                            id={t.id}
-                                            title={t.title}
-                                            addedDate={t.addedDate}
-                                            order={t.order}
-                                        /></Paper></Grid>)
-                            })}/>
-                            <Route path={paths.login} element={<Login/>}/>
-                            <Route path={paths['404']} element={'404'}/>
-                            <Route path="*" element={<Navigate to={'/404'}/>}/>
-                        </Routes>
 
-
-                    </Grid>
+                <Container fixed={true}>
+                    <Routes>
+                        <Route path={paths.main} element={<Todolists/>}/>
+                        <Route path={paths.login} element={<Login/>}/>
+                        <Route path={paths['404']} element={'404'}/>
+                        <Route path={'*'} element={<Navigate to={paths['404']}/>}/>
+                    </Routes>
                 </Container>
+
             </div>
         </ThemeProvider>
     );
