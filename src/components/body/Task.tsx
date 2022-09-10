@@ -31,13 +31,15 @@ export const Task = memo(({taskTitle, status, taskID, todoID, entityTaskStatus}:
     }, [dispatch, todoID, taskID])
 
 
-    return (
+    return (<>
+            <hr/>
         <li style={{
             display: 'grid',
             alignItems: 'center',
             gridAutoFlow: 'column',
             justifyContent: 'space-between',
         }}>
+
             <Select disabled={isDisabled} variant={'standard'} style={{color: 'inherit', fontSize: 'small', paddingLeft: '5px'}}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -50,7 +52,8 @@ export const Task = memo(({taskTitle, status, taskID, todoID, entityTaskStatus}:
                 <MenuItem value={TaskStatuses.Draft}>Draft</MenuItem>
                 <MenuItem value={TaskStatuses.InProgress}>In propgress</MenuItem>
             </Select>
-            <div style={{fontFamily: '-moz-initial'}}>
+            <div style={{fontFamily: '-moz-initial', width: '100%'}}>
+
                 <SpanInput fontSize={'medium'} title={taskTitle} todoID={todoID}
                            callBack={changeTaskTitle}/>
             </div>
@@ -58,5 +61,6 @@ export const Task = memo(({taskTitle, status, taskID, todoID, entityTaskStatus}:
                 <Delete/>
             </IconButton>
         </li>
+        </>
     );
 })
