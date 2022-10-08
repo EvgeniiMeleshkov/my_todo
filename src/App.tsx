@@ -1,16 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import './App.css';
 import {useSelector} from 'react-redux';
-import {ToDoList} from './components/body/ToDoList';
 import {AddItemForm} from './components/AddItemForm/AddItemForm';
 import {
     AppBar, Button, CircularProgress,
     Container,
     createTheme,
     CssBaseline,
-    Grid,
     LinearProgress,
-    Paper,
     ThemeProvider, Toolbar
 } from '@material-ui/core';
 import {green, yellow} from '@material-ui/core/colors';

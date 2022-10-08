@@ -14,7 +14,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export function ErrorSnackbar() {
-    //const [open, setOpen] = React.useState(true);
     const error = useSelector<AppRootStateType, string | null >((state)=> state.app.error)
     const isOpen = error !== null
     const dispatch = useDispatch()
@@ -25,7 +24,6 @@ export function ErrorSnackbar() {
         }
         dispatch(setAppErrorAC(null))
         dispatch(setAppStatusAC('idle'))
-        //setOpen(false);
     };
 
 
